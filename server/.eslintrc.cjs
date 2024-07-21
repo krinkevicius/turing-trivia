@@ -19,6 +19,7 @@ module.exports = {
     // that can cause issues when using import aliases.
     'import/extensions': 'off',
     'import/no-extraneous-dependencies': 'off',
+    '@typescript-eslint/consistent-type-imports': 'error',
     'import/order': [
       'error',
       {

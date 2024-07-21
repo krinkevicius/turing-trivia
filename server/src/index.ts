@@ -2,7 +2,7 @@ import { createServer } from 'node:http'
 import express from 'express'
 import { Server } from 'socket.io'
 import type { EventsMap } from '@socket.io/component-emitter'
-import { ClientToServerEvents, ServerToClientEvents, SocketData } from '@server/types'
+import type { ClientToServerEvents, ServerToClientEvents, SocketData } from '@server/types'
 
 const app = express()
 const server = createServer(app)
