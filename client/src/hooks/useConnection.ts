@@ -14,8 +14,8 @@ export default function useConnection() {
 
     const onConnectError = (error: Error) => {
       setConnectionStatus('disconnected')
+      useUserStore.persist.clearStorage()
       alert(error)
-      // rkq: should also remove token from local storage
     }
 
     const onSession = (sessionId: SessionId, user: User) => {

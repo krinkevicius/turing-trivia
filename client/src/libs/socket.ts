@@ -1,19 +1,20 @@
 import { io } from 'socket.io-client'
 import type { Socket } from 'socket.io-client'
 import type { ClientToServerEvents, ServerToClientEvents } from '@server/shared'
+import { useUserStore } from '@/store/userStore'
 
+// rkq: move or create env file
 const SOCKET_PORT = 8181
 const URL = `http://localhost:${SOCKET_PORT}`
 
-//rkq: change
-const id = false
+const { sessionId } = useUserStore.getState()
 
-const options = id
+const options = sessionId
   ? {
       auth: {
-        sessionId: '6bb83ebd39f3b6f6',
+        sessionId,
       },
-      autoConnect: false,
+      autoConnect: true,
     }
   : { autoConnect: false }
 
