@@ -5,6 +5,16 @@ import type { ClientToServerEvents, ServerToClientEvents } from '@server/shared'
 const SOCKET_PORT = 8181
 const URL = `http://localhost:${SOCKET_PORT}`
 
-const options = { autoConnect: false }
+//rkq: change
+const id = false
+
+const options = id
+  ? {
+      auth: {
+        sessionId: '6bb83ebd39f3b6f6',
+      },
+      autoConnect: false,
+    }
+  : { autoConnect: false }
 
 export const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(URL, options)

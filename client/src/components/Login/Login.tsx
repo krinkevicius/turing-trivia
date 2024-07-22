@@ -13,7 +13,7 @@ export default function Login() {
 
   function connect() {
     console.log('connecting to server...')
-    socket.auth = { username }
+    socket.auth = { ...socket.auth, username }
     socket.connect()
     setConnectionStatus(socket.connected ? 'connected' : 'connecting')
   }

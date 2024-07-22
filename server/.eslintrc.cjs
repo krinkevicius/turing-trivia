@@ -40,7 +40,7 @@ module.exports = {
     // which in various cases improves readability
     'no-use-before-define': ['error', { functions: false }],
     '@typescript-eslint/no-use-before-define': ['error', { functions: false }],
-
+    'no-param-reassign': 'off',
     'import/prefer-default-export': 'off',
   },
 }

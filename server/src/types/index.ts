@@ -1,8 +1,15 @@
 // rkq change
-export type DataFomServer = {
-  sessionId: string
+export type SessionId = string
+
+export type User = {
+  userId: string
   username: string
 }
+
+// export type DataFomServer = {
+//   sessionId: SessionId
+//   user: User
+// }
 
 export type ClientToServerEvents = {
   createRoom: (callback: (roomId: string) => void) => void
@@ -15,7 +22,7 @@ export type ClientToServerEvents = {
 }
 
 export type ServerToClientEvents = {
-  session: (data: DataFomServer) => void
+  session: (sessionId: SessionId, user: User) => void
   // rkq: delete these
   fakeNoArg: () => void
   fakeBasicEmit: (a: number, b: string, c: Buffer) => void
@@ -25,6 +32,5 @@ export type ServerToClientEvents = {
 }
 
 export type SocketData = {
-  sessionId: string
-  username: string
+  sessionId: SessionId
 }
