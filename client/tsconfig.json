@@ -28,6 +28,6 @@
 
     "types": ["@testing-library/jest-dom", "vitest/globals"]
   },
-  "include": ["src"],
+  "include": ["src", "__mocks__"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
