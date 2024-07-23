@@ -6,7 +6,7 @@ import { Server } from 'socket.io'
 import type { EventsMap } from '@socket.io/component-emitter'
 import type { ClientToServerEvents, ServerToClientEvents, SocketData } from '@server/types'
 import generateRandomId from '@server/utils/generateRandomId'
-import { initializeSessionStore } from '@server/store'
+import { initializeGameStore, initializeSessionStore } from '@server/store'
 
 const app = express()
 const server = createServer(app)
@@ -21,6 +21,7 @@ const io = new Server<ClientToServerEvents, ServerToClientEvents, EventsMap, Soc
 })
 
 const sessions = initializeSessionStore()
+const games = initializeGameStore()
 
 io.use((socket, next) => {
   console.log('middleware...')
@@ -57,6 +58,23 @@ io.on('connection', socket => {
 
   socket.emit('session', socket.data.sessionId, user)
 
+  socket.on('createGame', callback => {
+    console.log('server should createGame')
+    const gameId = generateRandomId()
+    games.createNewGame(gameId, user)
+    callback(gameId)
+    socket.join(gameId)
+    updateGame(gameId)
+    console.log(games.getGameById(gameId))
+  })
+
+  socket.on('leaveGame', gameId => {
+    games.leaveGame(gameId, user)
+    socket.leave(gameId)
+    // broadcast to others new list of players
+    console.log(games.getGameById(gameId))
+  })
+
   socket.on('disconnect', () => {
     console.log('user disconnected')
   })
@@ -64,3 +82,11 @@ io.on('connection', socket => {
 server.listen(SOCKET_PORT, () => {
   console.log('Server running at port %d', SOCKET_PORT)
 })
+
+function updateGame(gameId: string) {
+  const gameData = games.getGameById(gameId)
+
+  if (!gameData) return
+
+  io.to(gameId).emit('updateGameData', gameData)
+}

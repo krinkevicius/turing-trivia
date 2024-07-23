@@ -54,7 +54,7 @@ npm run preview
 
 ☐ As a user I can create a room to start the game.
 
-☐ As a user I can copy the room ID to invite friends.
+🗹 As a user I can copy the room ID to invite friends.
 
 ☐ As a user I can join a game room that someone else created.
 
