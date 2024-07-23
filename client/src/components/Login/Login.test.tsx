@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { socket } from '@/libs/socket'
+import { UserStoreProvider } from '@/store/userStore'
 import Login from '.'
 
 vi.mock('@/libs/socket', () => {
@@ -25,7 +26,7 @@ beforeEach(() => {
 
 describe('Login', () => {
   it('should render an input for username and a button to login', () => {
-    render(<Login />)
+    renderLogin()
 
     const usernameInput = screen.getByPlaceholderText('Type your username')
     const loginButton = screen.getByRole('button', { name: 'Login' })
@@ -35,7 +36,7 @@ describe('Login', () => {
   })
 
   it('should disable the button when the input is empty', () => {
-    render(<Login />)
+    renderLogin()
 
     const loginButton = screen.getByRole('button', { name: 'Login' })
 
@@ -43,7 +44,7 @@ describe('Login', () => {
   })
 
   it('should enable the button when the input is not empty', async () => {
-    render(<Login />)
+    renderLogin()
     const user = userEvent.setup()
 
     const usernameInput = screen.getByPlaceholderText('Type your username')
@@ -55,7 +56,7 @@ describe('Login', () => {
   })
 
   it('should disable the input element after the button is clicked', async () => {
-    render(<Login />)
+    renderLogin()
     const user = userEvent.setup()
 
     const usernameInput = screen.getByPlaceholderText('Type your username')
@@ -69,7 +70,7 @@ describe('Login', () => {
   })
 
   it('should change button text to "Loading" when button is clicked', async () => {
-    render(<Login />)
+    renderLogin()
     const user = userEvent.setup()
 
     const usernameInput = screen.getByPlaceholderText('Type your username')
@@ -87,7 +88,7 @@ describe('Login', () => {
 
   it('should change button text to "Connected!" when connected', async () => {
     socket.connected = true
-    render(<Login />)
+    renderLogin()
     const user = userEvent.setup()
 
     const usernameInput = screen.getByPlaceholderText('Type your username')
@@ -101,3 +102,11 @@ describe('Login', () => {
     expect(loginButton).toHaveTextContent('Connected!')
   })
 })
+
+function renderLogin() {
+  return render(
+    <UserStoreProvider>
+      <Login />
+    </UserStoreProvider>,
+  )
+}

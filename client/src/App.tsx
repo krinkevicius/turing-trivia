@@ -1,13 +1,13 @@
 import useConnection from '@/hooks/useConnection'
-import { useUserStore } from '@/store/userStore'
 import Login from '@/components/Login'
 import GameLobby from '@/components/GameLobby'
+import { useUserStoreContext } from '@/store/userStore'
+
 function App() {
   useConnection()
-  const connectionStatus = useUserStore(state => state.connectionStatus)
-  const user = useUserStore(state => state.user)
-  const sessionId = useUserStore(state => state.sessionId)
-
+  const connectionStatus = useUserStoreContext(state => state.connectionStatus)
+  const user = useUserStoreContext(state => state.user)
+  const sessionId = useUserStoreContext(state => state.sessionId)
   return (
     <div>
       <div>Connection status: {connectionStatus}</div>

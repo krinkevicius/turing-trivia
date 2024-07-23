@@ -1,4 +1,3 @@
-// rkq change
 export type SessionId = string
 
 export type User = {
@@ -6,17 +5,13 @@ export type User = {
   username: string
 }
 
-// export type DataFomServer = {
-//   sessionId: SessionId
-//   user: User
-// }
-
 export type ClientToServerEvents = {
-  createRoom: (callback: (roomId: string) => void) => void
+  createGame: (callback: (roomId: string) => void) => void
   cancelRoom: (roomId: string) => void
 
   // rkq: delete everything below
   // getQuestion: (callback: (question: Question) => void) => void
+  increaseBears: () => void
   fakeStart: () => void
   fakeDataFromClient: (data: string) => void
 }
@@ -24,6 +19,7 @@ export type ClientToServerEvents = {
 export type ServerToClientEvents = {
   session: (sessionId: SessionId, user: User) => void
   // rkq: delete these
+  bears: () => void
   fakeNoArg: () => void
   fakeBasicEmit: (a: number, b: string, c: Buffer) => void
   fakeWithAck: (d: string, callback: (e: number) => void) => void

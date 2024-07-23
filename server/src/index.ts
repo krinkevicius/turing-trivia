@@ -27,10 +27,8 @@ io.use((socket, next) => {
   console.log(socket.handshake.auth)
 
   const { sessionId } = socket.handshake.auth
-
   const username = socket.handshake.auth.username || `anonymous_${generateRandomId(2)}`
 
-  console.log('username:', username)
   if (sessionId) {
     console.log('sessionId found')
     const session = sessions.getSessionById(sessionId)

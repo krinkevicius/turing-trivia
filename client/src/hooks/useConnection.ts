@@ -1,10 +1,11 @@
 import { useEffect } from 'react'
 import { socket } from '@/libs/socket'
-import { useUserStore } from '@/store/userStore'
 import type { SessionId, User } from '@server/shared'
+import { useUserStoreContext } from '@/store/userStore'
+import { USER_STORAGE_KEY } from '@/consts'
 
 export default function useConnection() {
-  const { setConnectionStatus, setSessionId, setUser } = useUserStore()
+  const { setConnectionStatus, setSessionId, setUser } = useUserStoreContext(state => state)
 
   useEffect(() => {
     const onConnect = () => {
@@ -14,7 +15,7 @@ export default function useConnection() {
 
     const onConnectError = (error: Error) => {
       setConnectionStatus('disconnected')
-      useUserStore.persist.clearStorage()
+      localStorage.removeItem(USER_STORAGE_KEY)
       alert(error)
     }
 

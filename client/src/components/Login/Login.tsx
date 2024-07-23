@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { socket } from '@/libs/socket'
-import { useUserStore } from '@/store/userStore'
+import { useUserStoreContext } from '@/store/userStore'
 
 export default function Login() {
   const [username, setUsername] = useState<string>('')
-  const connectionStatus = useUserStore(state => state.connectionStatus)
-  const setConnectionStatus = useUserStore(state => state.setConnectionStatus)
+  const connectionStatus = useUserStoreContext(state => state.connectionStatus)
+  const setConnectionStatus = useUserStoreContext(state => state.setConnectionStatus)
 
   const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(event.target.value)
