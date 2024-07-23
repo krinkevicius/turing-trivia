@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { socket } from '@/libs/socket'
 import { useUserStoreContext } from '@/store/userStore'
+import Button from '@/components/ui/Button'
 
 export default function Login() {
   const [username, setUsername] = useState<string>('')
@@ -36,9 +37,9 @@ export default function Login() {
         onChange={handleUsernameChange}
         placeholder="Type your username"
       />
-      <button disabled={!username || connectionStatus !== 'disconnected'} onClick={connect}>
+      <Button disabled={!username || connectionStatus !== 'disconnected'} onClick={connect}>
         {buttonText}
-      </button>
+      </Button>
     </div>
   )
 }
