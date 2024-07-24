@@ -3,16 +3,13 @@ import CreateGame from '@/components/GameLobby/CreateGame'
 import JoinGame from '@/components/GameLobby/JoinGame'
 import { socket } from '@/libs/socket'
 import { useGameStoreContext } from '@/store/gameStore'
-import CopyButton from '@/components/CopyButton'
-// import LobbyUserCard from '@/components/GameLobby/LobbyUserCard'
+import Button from '@/components/ui/Button'
 
 type LobbyAction = 'create' | 'join' | null
 
 export default function GameLobby() {
   const gameId = useGameStoreContext(state => state.gameId)
-  const players = useGameStoreContext(state => state.players)
   const setGameId = useGameStoreContext(state => state.setGameId)
-  const resetGameStore = useGameStoreContext(state => state.resetGameStore)
   const [lobbyAction, setLobbyAction] = useState<LobbyAction>(null)
 
   async function handleCreateGame() {
@@ -28,12 +25,12 @@ export default function GameLobby() {
   function handleJoinGame() {
     setLobbyAction('join')
   }
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    // setUsername(event.target.value)
+    console.log(event.target.value)
+  }
 
-  function handleResetActionFromCreate() {
-    // send request to server to leave room
-    socket.emit('leaveGame', gameId)
-    // reset game store values???
-    resetGameStore()
+  function handleGoBack() {
     setLobbyAction(null)
   }
 
@@ -48,28 +45,14 @@ export default function GameLobby() {
 
   return lobbyAction === 'create' ? (
     <>
-      <CreateGame />
-      {gameId ? (
-        <>
-          <div>Room ID: {gameId}</div>
-          <CopyButton textToCopy={gameId} />
-        </>
-      ) : (
-        <>Generating room ID...</>
-      )}
-      <button onClick={handleResetActionFromCreate}>Back</button>
-      {/* rkq: list of current players */}
-      {players.map(player => (
-        <div key={player.userId}>
-          <div>{player.username}</div>
-          {/* <LobbyUserCard /> */}
-        </div>
-      ))}
+      <CreateGame onGoBack={handleGoBack} />
     </>
   ) : (
     <>
       <JoinGame />
-      <button onClick={() => setLobbyAction(null)}>Back</button>
+      <input type="text" onChange={handleInputChange} placeholder="Type game code" />
+      <Button onClick={handleJoinGame}>Join</Button>
+      <Button onClick={() => setLobbyAction(null)}>Back</Button>
     </>
   )
 }
