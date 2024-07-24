@@ -6,23 +6,23 @@ import CreateGame from '.'
 const mockedPropFn = vi.fn()
 
 describe('CreateGame', () => {
-  it('should render "Generating room ID" text and back buttons if roomID is not received from server', () => {
+  it('should render "Generating game ID" text and back buttons if gameId is not received from server', () => {
     renderCreateGame()
 
-    expect(screen.getByText('Generating room ID...')).toBeInTheDocument()
+    expect(screen.getByText('Generating game ID...')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Back' })).toBeInTheDocument()
-    expect(screen.queryByText(/Room ID:/)).not.toBeInTheDocument()
+    expect(screen.queryByText(/Game ID:/)).not.toBeInTheDocument()
     expect(screen.queryByRole('button', { name: 'Copy' })).not.toBeInTheDocument()
   })
 
-  it('should render room ID copy and back buttons if roomId is received from server', () => {
+  it('should render game ID, copy and back buttons if gameId is received from server', () => {
     const gameIdFromServer = '6968457d04a12a60'
     renderCreateGame(gameIdFromServer)
 
-    expect(screen.getByText(`Room ID: ${gameIdFromServer}`)).toBeInTheDocument()
+    expect(screen.getByText(`Game ID: ${gameIdFromServer}`)).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Copy' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Back' })).toBeInTheDocument()
-    expect(screen.queryByText('Generating room ID...')).not.toBeInTheDocument()
+    expect(screen.queryByText('Generating game ID...')).not.toBeInTheDocument()
   })
 
   it('should call prop function when the cancel button is clicked', async () => {

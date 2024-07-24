@@ -7,9 +7,14 @@ export interface User {
   username: string
 }
 
+export type ServerResponse = {
+  status: 'ok' | 'error'
+}
+
 export type ClientToServerEvents = {
   createGame: (callback: (gameId: string) => void) => void
   leaveGame: (gameId: string) => void
+  joinGame: (gameId: string, callback: (response: ServerResponse) => void) => void
 
   // rkq: no longer needed?
   cancelRoom: (gameId: string) => void

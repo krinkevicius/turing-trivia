@@ -1,9 +1,8 @@
 import { useState } from 'react'
-import CreateGame from '@/components/GameLobby/CreateGame'
-import JoinGame from '@/components/GameLobby/JoinGame'
 import { socket } from '@/libs/socket'
 import { useGameStoreContext } from '@/store/gameStore'
-import Button from '@/components/ui/Button'
+import CreateGame from '@/components/GameLobby/CreateGame'
+import JoinGame from '@/components/GameLobby/JoinGame'
 
 type LobbyAction = 'create' | 'join' | null
 
@@ -25,9 +24,9 @@ export default function GameLobby() {
   function handleJoinGame() {
     setLobbyAction('join')
   }
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // setUsername(event.target.value)
-    console.log(event.target.value)
+
+  function onJoinSuccess() {
+    setLobbyAction('create')
   }
 
   function handleGoBack() {
@@ -44,15 +43,8 @@ export default function GameLobby() {
     )
 
   return lobbyAction === 'create' ? (
-    <>
-      <CreateGame onGoBack={handleGoBack} />
-    </>
+    <CreateGame onGoBack={handleGoBack} />
   ) : (
-    <>
-      <JoinGame />
-      <input type="text" onChange={handleInputChange} placeholder="Type game code" />
-      <Button onClick={handleJoinGame}>Join</Button>
-      <Button onClick={() => setLobbyAction(null)}>Back</Button>
-    </>
+    <JoinGame onGoBack={handleGoBack} onSuccess={onJoinSuccess} />
   )
 }

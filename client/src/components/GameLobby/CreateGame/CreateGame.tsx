@@ -12,7 +12,7 @@ export default function CreateGame({ onGoBack }: Props) {
   const players = useGameStoreContext(state => state.players)
   const resetGameStore = useGameStoreContext(state => state.resetGameStore)
 
-  const cancelRoomCreation = () => {
+  const cancelGameCreation = () => {
     // send request to server to leave room
     socket.emit('leaveGame', gameId)
     // reset game store values???
@@ -22,16 +22,15 @@ export default function CreateGame({ onGoBack }: Props) {
 
   return (
     <>
-      <div>Creating game...</div>
       {gameId ? (
         <>
-          <div>Room ID: {gameId}</div>
+          <div>Game ID: {gameId}</div>
           <CopyButton textToCopy={gameId} />
         </>
       ) : (
-        <>Generating room ID...</>
+        <>Generating game ID...</>
       )}
-      <Button onClick={cancelRoomCreation}>Back</Button>
+      <Button onClick={cancelGameCreation}>Back</Button>
       {/* rkq: list of current players */}
       {players.map(player => (
         <div key={player.userId}>
