@@ -62,18 +62,22 @@ io.on('connection', socket => {
     console.log('server should createGame')
     const gameId = generateRandomId()
     games.createNewGame(gameId, user)
-    callback(gameId)
     socket.join(gameId)
+    callback(gameId)
+    console.log(socket.rooms)
     updateGame(gameId)
     console.log(games.getGameById(gameId))
   })
 
   socket.on('leaveGame', gameId => {
+    console.log(`server should leaveGame ID ${gameId}`)
     games.leaveGame(gameId, user)
-    socket.leave(gameId)
+    // socket.leave(gameId)
     // broadcast to others new list of players
-    console.log(games.getGameById(gameId))
+    // console.log(games.getGameById(gameId))
   })
+
+  // socket.on('joinGame', gameId => {})
 
   socket.on('disconnect', () => {
     console.log('user disconnected')
@@ -89,4 +93,5 @@ function updateGame(gameId: string) {
   if (!gameData) return
 
   io.to(gameId).emit('updateGameData', gameData)
+  console.log('gameData updated')
 }

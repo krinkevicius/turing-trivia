@@ -52,7 +52,7 @@ npm run preview
 
 🗹 As a visitor I can login to establish connection to socket server.
 
-☐ As a user I can create a room to start the game.
+🗹 As a user I can create a room to start the game.
 
 🗹 As a user I can copy the room ID to invite friends.
 

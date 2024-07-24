@@ -1,3 +1,6 @@
+// rkq: remove rule
+/* eslint-disable no-console */
+
 import type { GameData, User } from '@server/types'
 
 export default function initializeGameStore() {
@@ -14,9 +17,11 @@ export default function initializeGameStore() {
 
   function joinGame(gameId: string, user: User) {
     const game = gameStorage.get(gameId)
-    if (!game) return
+    if (!game || game.status !== 'waitingToStart') return { status: 'error' }
 
     game.players.push({ ...user, score: 0 })
+
+    return { status: 'ok' }
   }
 
   function leaveGame(gameId: string, user: User) {
@@ -27,13 +32,16 @@ export default function initializeGameStore() {
     if (playerIndex === -1) return
 
     game.players.splice(playerIndex, 1)
+    console.log('game.players', game.players)
     if (game.players.length === 0) {
       removeGame(gameId)
     }
   }
 
   function removeGame(gameId: string) {
+    console.log('removing game', gameId)
     gameStorage.delete(gameId)
+    console.log('gameStorage', gameStorage)
   }
   return {
     gameStorage, // rkq: do I need to return this?

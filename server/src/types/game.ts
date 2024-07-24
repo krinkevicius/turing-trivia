@@ -4,7 +4,7 @@ export interface Player extends User {
   score: number
 }
 
-export type GameData = {
+export interface GameData {
   gameId: string
   status: 'waitingToStart' | 'inProgress' | 'over'
   players: Player[]

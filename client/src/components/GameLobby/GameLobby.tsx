@@ -4,18 +4,25 @@ import JoinGame from '@/components/GameLobby/JoinGame'
 import { socket } from '@/libs/socket'
 import { useGameStoreContext } from '@/store/gameStore'
 import CopyButton from '@/components/CopyButton'
+// import LobbyUserCard from '@/components/GameLobby/LobbyUserCard'
 
 type LobbyAction = 'create' | 'join' | null
 
 export default function GameLobby() {
   const gameId = useGameStoreContext(state => state.gameId)
+  const players = useGameStoreContext(state => state.players)
   const setGameId = useGameStoreContext(state => state.setGameId)
+  const resetGameStore = useGameStoreContext(state => state.resetGameStore)
   const [lobbyAction, setLobbyAction] = useState<LobbyAction>(null)
 
   async function handleCreateGame() {
     setLobbyAction('create')
-    const gameId = await socket.emitWithAck('createGame')
-    setGameId(gameId)
+    const response = await socket.emitWithAck('createGame')
+    if (!gameId) {
+      // rkq: remove
+      console.log('game lobby is updating gameId')
+      setGameId(response)
+    }
   }
 
   function handleJoinGame() {
@@ -24,8 +31,9 @@ export default function GameLobby() {
 
   function handleResetActionFromCreate() {
     // send request to server to leave room
-    // socket.emit('leaveGame', gameId)
+    socket.emit('leaveGame', gameId)
     // reset game store values???
+    resetGameStore()
     setLobbyAction(null)
   }
 
@@ -50,7 +58,13 @@ export default function GameLobby() {
         <>Generating room ID...</>
       )}
       <button onClick={handleResetActionFromCreate}>Back</button>
-      {/* list of current players */}
+      {/* rkq: list of current players */}
+      {players.map(player => (
+        <div key={player.userId}>
+          <div>{player.username}</div>
+          {/* <LobbyUserCard /> */}
+        </div>
+      ))}
     </>
   ) : (
     <>

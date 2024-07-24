@@ -1,10 +1,15 @@
 import { socket } from '@/libs/socket'
+import { useGameStoreContext } from '@/store/gameStore'
 import type { GameData } from '@server/shared'
 import { useEffect } from 'react'
+
 export default function useGameEvents() {
+  const updateGameData = useGameStoreContext(state => state.updateGameData)
+
   useEffect(() => {
     const onUpdateGameData = (gameData: GameData) => {
-      console.log('Game data updated:', gameData)
+      console.log('hook got gameData')
+      updateGameData(gameData)
     }
 
     socket.on('updateGameData', onUpdateGameData)
@@ -12,5 +17,5 @@ export default function useGameEvents() {
     return () => {
       socket.off('updateGameData', onUpdateGameData)
     }
-  })
+  }, [updateGameData])
 }
