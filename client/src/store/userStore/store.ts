@@ -3,9 +3,19 @@ import type { UserProps, UserState } from '@/types'
 import { createStore } from 'zustand'
 import { persist } from 'zustand/middleware'
 
+function setInitialConnectionStatus() {
+  const userStorage = localStorage.getItem(USER_STORAGE_KEY)
+  if (!userStorage) return 'disconnected'
+
+  const userStorageObject = JSON.parse(userStorage)
+  return userStorageObject.state && userStorageObject.state.sessionId !== null
+    ? 'connecting'
+    : 'disconnected'
+}
+
 export const createUserStore = (initProps?: Partial<UserProps>) => {
   const DEFAULT_PROPS: UserProps = {
-    connectionStatus: 'disconnected',
+    connectionStatus: setInitialConnectionStatus(),
     sessionId: null,
     user: null,
   }

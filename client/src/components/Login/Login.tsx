@@ -19,7 +19,7 @@ export default function Login() {
     setConnectionStatus(socket.connected ? 'connected' : 'connecting')
   }
 
-  const buttonText = (() => {
+  const buttonText = () => {
     switch (connectionStatus) {
       case 'connected':
         return 'Connected!'
@@ -28,7 +28,7 @@ export default function Login() {
       default:
         return 'Login'
     }
-  })()
+  }
   return (
     <div>
       <input
@@ -38,7 +38,7 @@ export default function Login() {
         placeholder="Type your username"
       />
       <Button disabled={!username || connectionStatus !== 'disconnected'} onClick={connect}>
-        {buttonText}
+        {buttonText()}
       </Button>
     </div>
   )
