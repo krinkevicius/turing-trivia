@@ -26,7 +26,7 @@ export default function LobbyPlayerCard({ player }: Props) {
       <div>{player.status === 'ready' && <div>Ready!</div>}</div>
       {user.userId === player.userId && (
         <Button onClick={handleReady} disabled={player.status === 'ready'}>
-          I'm ready!
+          {player.status === 'waiting' ? "I'm ready!" : 'Waiting for other players...'}
         </Button>
       )}
     </>

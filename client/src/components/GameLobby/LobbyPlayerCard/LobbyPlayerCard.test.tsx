@@ -50,12 +50,13 @@ describe('LobbyPlayerCard', () => {
     expect(screen.queryByRole('button', { name: "I'm ready!" })).not.toBeInTheDocument()
   })
 
-  it('should render a user card with text "Ready!" and disable the button if player is ready', () => {
+  it('should render a user card with text "Ready!", disable the button and change its text if player is ready', () => {
     const readyPlayer: Player = { ...testPlayer, status: 'ready' }
     renderLobbyUserCard(readyPlayer)
 
     expect(screen.getByText('Ready!')).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: "I'm ready!" })).toBeDisabled()
+    expect(screen.queryByRole('button', { name: "I'm ready!" })).not.toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Waiting for other players...' })).toBeDisabled()
   })
 
   it('should send socket request to set player status to ready when "I\'m ready!" button is clicked', async () => {
