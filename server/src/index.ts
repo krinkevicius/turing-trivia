@@ -87,6 +87,18 @@ io.on('connection', socket => {
     callback(response)
   })
 
+  socket.on('playerReady', gameId => {
+    console.log(`player ${user.userId} is ready to play ${gameId}`)
+    games.setPlayerReady(gameId, user.userId)
+
+    updateGame(gameId, socket)
+
+    // if (games.isGameReady(gameId)) {
+    //   gameLoop()
+    //   updateGame(gameId, socket)
+    // }
+  })
+
   socket.on('disconnect', () => {
     console.log('user disconnected')
   })

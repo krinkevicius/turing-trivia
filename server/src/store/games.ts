@@ -27,6 +27,19 @@ export default function initializeGameStore() {
     return { status: 'ok' }
   }
 
+  function setPlayerReady(gameId: string, userId: string): ServerResponse {
+    const game = gameStorage.get(gameId)
+    if (!game) return { status: 'error' }
+
+    game.players = game.players.map(p => (p.userId === userId ? { ...p, status: 'ready' } : p))
+
+    if (game.players.every(p => p.status === 'ready')) {
+      game.status = 'inProgress'
+    }
+    console.log(game)
+    return { status: 'ok' }
+  }
+
   function leaveGame(gameId: string, user: User) {
     const game = gameStorage.get(gameId)
     if (!game) return
@@ -52,6 +65,7 @@ export default function initializeGameStore() {
     getGameById,
     joinGame,
     leaveGame,
+    setPlayerReady,
     removeGame, // rkq: do I need to return this?
   }
 }

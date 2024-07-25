@@ -12,6 +12,7 @@ function App() {
   const user = useUserStoreContext(state => state.user)
   const sessionId = useUserStoreContext(state => state.sessionId)
   const gameId = useGameStoreContext(state => state.gameId)
+  const gameStatus = useGameStoreContext(state => state.status)
   return (
     <div>
       <div>Connection status: {connectionStatus}</div>
@@ -20,6 +21,7 @@ function App() {
       <div>Username: {user?.username}</div>
       <hr></hr>
       <div>{gameId}</div>
+      {gameStatus !== 'waitingToStart' && <div>GAME SHOULD START!!!</div>}
       {connectionStatus === 'connected' ? <GameLobby /> : <Login />}
     </div>
   )
