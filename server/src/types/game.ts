@@ -1,6 +1,7 @@
 import type { User } from '@server/types'
 
 export interface Player extends User {
+  status: 'waiting' | 'ready'
   score: number
 }
 

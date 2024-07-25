@@ -15,6 +15,7 @@ export type ClientToServerEvents = {
   createGame: (callback: (gameId: string) => void) => void
   leaveGame: (gameId: string) => void
   joinGame: (gameId: string, callback: (response: ServerResponse) => void) => void
+  playerReady: (userId: string) => void
 
   // rkq: no longer needed?
   cancelRoom: (gameId: string) => void

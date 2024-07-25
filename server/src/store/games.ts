@@ -22,7 +22,7 @@ export default function initializeGameStore() {
     if (!game || game.status !== 'waitingToStart' || game.players.length >= 4)
       return { status: 'error' }
 
-    game.players.push({ ...user, score: 0 })
+    game.players.push({ ...user, status: 'waiting', score: 0 })
 
     return { status: 'ok' }
   }
