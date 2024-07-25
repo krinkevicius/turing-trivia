@@ -1,13 +1,14 @@
 // rkq: remove rule
 /* eslint-disable no-console */
 
-import type { GameData, User } from '@server/types'
+import type { GameData, User, ServerResponse } from '@server/types'
 
 export default function initializeGameStore() {
   const gameStorage = new Map<string, GameData>()
 
   function createNewGame(gameId: string, user: User) {
     gameStorage.set(gameId, { gameId, status: 'waitingToStart', players: [] })
+    // rkq: do I need to return this? Then check based on status
     joinGame(gameId, user)
   }
 
@@ -15,9 +16,11 @@ export default function initializeGameStore() {
     return gameStorage.get(gameId)
   }
 
-  function joinGame(gameId: string, user: User) {
+  function joinGame(gameId: string, user: User): ServerResponse {
     const game = gameStorage.get(gameId)
-    if (!game || game.status !== 'waitingToStart') return { status: 'error' }
+
+    if (!game || game.status !== 'waitingToStart' || game.players.length >= 4)
+      return { status: 'error' }
 
     game.players.push({ ...user, score: 0 })
 

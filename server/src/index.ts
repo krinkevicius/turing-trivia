@@ -2,6 +2,7 @@
 /* eslint-disable no-console */
 import { createServer } from 'node:http'
 import express from 'express'
+import type { Socket } from 'socket.io'
 import { Server } from 'socket.io'
 import type { EventsMap } from '@socket.io/component-emitter'
 import type { ClientToServerEvents, ServerToClientEvents, SocketData } from '@server/types'
@@ -65,19 +66,26 @@ io.on('connection', socket => {
     socket.join(gameId)
     callback(gameId)
     console.log(socket.rooms)
-    updateGame(gameId)
+    updateGame(gameId, socket)
     console.log(games.getGameById(gameId))
   })
 
   socket.on('leaveGame', gameId => {
     console.log(`server should leaveGame ID ${gameId}`)
     games.leaveGame(gameId, user)
-    // socket.leave(gameId)
-    // broadcast to others new list of players
+    updateGame(gameId, socket)
+    socket.leave(gameId)
     // console.log(games.getGameById(gameId))
   })
 
-  // socket.on('joinGame', gameId => {})
+  socket.on('joinGame', (gameId, callback) => {
+    const response = games.joinGame(gameId, user)
+    if (response.status === 'ok') {
+      socket.join(gameId)
+      updateGame(gameId, socket)
+    }
+    callback(response)
+  })
 
   socket.on('disconnect', () => {
     console.log('user disconnected')
@@ -87,11 +95,20 @@ server.listen(SOCKET_PORT, () => {
   console.log('Server running at port %d', SOCKET_PORT)
 })
 
-function updateGame(gameId: string) {
+function updateGame(
+  gameId: string,
+  socket: Socket<ClientToServerEvents, ServerToClientEvents, EventsMap, SocketData>,
+  toEveryone: boolean = true,
+) {
   const gameData = games.getGameById(gameId)
 
   if (!gameData) return
 
-  io.to(gameId).emit('updateGameData', gameData)
+  if (toEveryone) {
+    io.to(gameId).emit('updateGameData', gameData)
+  } else {
+    socket.broadcast.emit('updateGameData', gameData)
+  }
+
   console.log('gameData updated')
 }
