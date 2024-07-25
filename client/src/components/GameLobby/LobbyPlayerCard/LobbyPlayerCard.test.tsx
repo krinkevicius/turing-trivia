@@ -4,6 +4,7 @@ import { UserStoreProvider } from '@/store/userStore'
 import type { Player, User } from '@server/shared'
 import { socket } from '@/libs/socket'
 import LobbyPlayerCard from '.'
+import { GameStoreProvider } from '@/store/gameStore'
 
 vi.mock('@/libs/socket', () => {
   return {
@@ -49,7 +50,7 @@ describe('LobbyPlayerCard', () => {
     expect(screen.queryByRole('button', { name: "I'm ready!" })).not.toBeInTheDocument()
   })
 
-  it('should render a user card with the user name and "ready" and disable the button if player is ready', () => {
+  it('should render a user card with text "Ready!" and disable the button if player is ready', () => {
     const readyPlayer: Player = { ...testPlayer, status: 'ready' }
     renderLobbyUserCard(readyPlayer)
 
@@ -63,7 +64,7 @@ describe('LobbyPlayerCard', () => {
 
     await user.click(screen.getByRole('button', { name: "I'm ready!" }))
 
-    expect(socket.emit).toHaveBeenCalledWith('playerReady', '12345')
+    expect(socket.emit).toHaveBeenCalledWith('playerReady', 'game-id-123')
   })
 })
 
@@ -74,8 +75,10 @@ function renderLobbyUserCard(withPlayer: Player) {
   }
 
   return render(
-    <UserStoreProvider user={userViewingScreen}>
-      <LobbyPlayerCard player={withPlayer} />
-    </UserStoreProvider>,
+    <GameStoreProvider gameId="game-id-123">
+      <UserStoreProvider user={userViewingScreen}>
+        <LobbyPlayerCard player={withPlayer} />
+      </UserStoreProvider>
+    </GameStoreProvider>,
   )
 }

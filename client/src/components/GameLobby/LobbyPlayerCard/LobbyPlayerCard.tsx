@@ -1,5 +1,6 @@
 import Button from '@/components/ui/Button'
 import { socket } from '@/libs/socket'
+import { useGameStoreContext } from '@/store/gameStore'
 import { useUserStoreContext } from '@/store/userStore'
 import type { Player } from '@server/shared'
 
@@ -9,10 +10,10 @@ type Props = {
 
 export default function LobbyPlayerCard({ player }: Props) {
   const user = useUserStoreContext(state => state.user)
-
+  const gameId = useGameStoreContext(state => state.gameId)
   function handleReady() {
     // rkq: send socket request to set player status to ready
-    socket.emit('playerReady', player.userId)
+    socket.emit('playerReady', gameId)
   }
 
   if (!user) return null
