@@ -1,6 +1,6 @@
 // rkq: remove rule
 /* eslint-disable no-console */
-import type { GameData, User, ServerResponse, Question } from '@server/types'
+import type { GameData, User, ServerResponse, Question, GameId } from '@server/types'
 
 type ServerGameStore = {
   gameStorage: Map<string, GameData>
@@ -10,6 +10,8 @@ type ServerGameStore = {
   leaveGame: (gameId: string, user: User) => void
   setPlayerReady: (gameId: string, userId: string) => ServerResponse
   setQuestion: (gameId: string, question: Question) => void
+  setPlayerAnswer: (gameId: GameId, userId: string, questionId: string, answerId: string) => void
+  checkAnswers: (gameId: GameId) => void
   isGameReady: (gameId: string) => boolean
   removeGame: (gameId: string) => void
 }
@@ -38,7 +40,7 @@ export default function initializeGameStore(): ServerGameStore {
     if (!game || game.status !== 'waitingToStart' || game.players.length >= 4)
       return { status: 'error' }
 
-    game.players.push({ ...user, status: 'waiting', score: 0 })
+    game.players.push({ ...user, status: 'waiting', score: 0, selectedAnswer: null })
 
     return { status: 'ok' }
   }
@@ -63,6 +65,29 @@ export default function initializeGameStore(): ServerGameStore {
     game.currentQuestion = question
 
     console.log('game.currentQuestion', game)
+  }
+
+  function setPlayerAnswer(gameId: GameId, userId: string, questionId: string, answerId: string) {
+    const game = gameStorage.get(gameId)
+    if (!game || !game.currentQuestion || game.currentQuestion.id !== questionId) return
+
+    game.players = game.players.map(p =>
+      p.userId === userId ? { ...p, selectedAnswer: answerId } : p,
+    )
+    console.log('player answered', game.players)
+  }
+
+  function checkAnswers(gameId: GameId) {
+    const game = gameStorage.get(gameId)
+    if (!game || !game.currentQuestion) return
+
+    game.players = game.players.map(p => {
+      if (p.selectedAnswer === game.currentQuestion?.answers.find(a => a.isCorrect)?.id) {
+        return { ...p, score: p.score + 1 }
+      }
+      return p
+    })
+    console.log('game.players', game.players)
   }
 
   function leaveGame(gameId: string, user: User) {
@@ -99,6 +124,8 @@ export default function initializeGameStore(): ServerGameStore {
     leaveGame,
     setPlayerReady,
     setQuestion,
+    setPlayerAnswer,
+    checkAnswers,
     isGameReady,
     removeGame, // rkq: do I need to return this?
   }

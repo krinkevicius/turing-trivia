@@ -43,6 +43,7 @@ const testQuestion: Question = {
     },
   ],
   category: 'geography',
+  showAnswers: false,
 }
 
 describe('QuestionComponent', () => {

@@ -2,6 +2,7 @@ import type { User } from '@server/types'
 
 export interface Player extends User {
   status: 'waiting' | 'ready'
+  selectedAnswer: string | null
   score: number
 }
 
@@ -34,6 +35,7 @@ export type Question = {
   questionText: string
   answers: Answer[]
   category: string
+  showAnswers: boolean
 }
 
 export interface GameData {

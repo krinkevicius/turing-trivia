@@ -22,6 +22,7 @@ const testPlayer: Player = {
   username: 'user123',
   status: 'waiting',
   score: 0,
+  selectedAnswer: null,
 }
 
 describe('LobbyPlayerCard', () => {
@@ -43,6 +44,7 @@ describe('LobbyPlayerCard', () => {
       username: 'user543',
       status: 'waiting',
       score: 0,
+      selectedAnswer: null,
     }
 
     renderLobbyUserCard(differentPlayer)

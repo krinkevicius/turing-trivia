@@ -37,6 +37,7 @@ describe('MainGame', () => {
         },
       ],
       category: 'geography',
+      showAnswers: false,
     }
 
     renderMainGame(testQuestion)

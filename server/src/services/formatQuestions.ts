@@ -13,5 +13,6 @@ export default function formatQuestions(input: APIQuestion[]): Question[] {
         incorrectAnswers: question.incorrectAnswers,
       }),
     ),
+    showAnswers: false,
   }))
 }

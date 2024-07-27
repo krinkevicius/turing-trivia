@@ -10,6 +10,7 @@ describe('GamePlayerCard', () => {
       username: 'user123',
       status: 'waiting',
       score: 0,
+      selectedAnswer: null,
     }
 
     render(<GamePlayerCard player={testPlayer} />)

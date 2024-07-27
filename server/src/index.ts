@@ -83,7 +83,6 @@ io.on('connection', socket => {
     games.leaveGame(gameId, user)
     updateGame(gameId, socket)
     socket.leave(gameId)
-    // console.log(games.getGameById(gameId))
   })
 
   socket.on('joinGame', (gameId, callback) => {
@@ -104,6 +103,10 @@ io.on('connection', socket => {
     if (games.isGameReady(gameId)) {
       gameLoop(gameId, socket)
     }
+  })
+
+  socket.on('answer', (gameId, questionId, answerId) => {
+    games.setPlayerAnswer(gameId, user.userId, questionId, answerId)
   })
 
   socket.on('disconnect', () => {
@@ -136,7 +139,7 @@ async function gameLoop(
 ) {
   // rkq: change limit to QUESTIONS_PER_ROUND
   const questions: Question[] = await getQuestions({
-    limit: 2,
+    limit: 1,
     categories: Object.keys(CATEGORIES).join(','),
   })
   for (let i = 0; i < questions.length; i += 1) {
@@ -144,8 +147,9 @@ async function gameLoop(
     games.setQuestion(gameId, questions[i])
     updateGame(gameId, socket)
     await new Promise(resolve => {
-      setTimeout(resolve, 10000)
+      setTimeout(resolve, 15000)
     })
+    games.checkAnswers(gameId)
     console.log(new Date())
   }
 

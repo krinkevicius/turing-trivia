@@ -36,6 +36,7 @@ describe('formatQuestions', () => {
       id: '1',
       category: 'test-category',
       questionText: 'question text',
+      showAnswers: false,
       answers: [
         {
           id: expect.any(String),
