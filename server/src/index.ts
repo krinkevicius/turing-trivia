@@ -5,9 +5,17 @@ import express from 'express'
 import type { Socket } from 'socket.io'
 import { Server } from 'socket.io'
 import type { EventsMap } from '@socket.io/component-emitter'
-import type { ClientToServerEvents, ServerToClientEvents, SocketData } from '@server/types'
+import type {
+  ClientToServerEvents,
+  Question,
+  ServerToClientEvents,
+  SocketData,
+} from '@server/types'
 import generateRandomId from '@server/utils/generateRandomId'
 import { initializeGameStore, initializeSessionStore } from '@server/store'
+import getQuestions from '@server/services'
+import { CATEGORIES } from '@server/consts'
+// import gameLoop from '@server/gameLoop'
 
 const app = express()
 const server = createServer(app)
@@ -93,10 +101,9 @@ io.on('connection', socket => {
 
     updateGame(gameId, socket)
 
-    // if (games.isGameReady(gameId)) {
-    //   gameLoop()
-    //   updateGame(gameId, socket)
-    // }
+    if (games.isGameReady(gameId)) {
+      gameLoop(gameId, socket)
+    }
   })
 
   socket.on('disconnect', () => {
@@ -121,6 +128,26 @@ function updateGame(
   } else {
     socket.broadcast.emit('updateGameData', gameData)
   }
+}
 
-  console.log('gameData updated')
+async function gameLoop(
+  gameId: string,
+  socket: Socket<ClientToServerEvents, ServerToClientEvents, EventsMap, SocketData>,
+) {
+  // rkq: change limit to QUESTIONS_PER_ROUND
+  const questions: Question[] = await getQuestions({
+    limit: 2,
+    categories: Object.keys(CATEGORIES).join(','),
+  })
+  for (let i = 0; i < questions.length; i += 1) {
+    console.log(questions[i].questionText)
+    games.setQuestion(gameId, questions[i])
+    updateGame(gameId, socket)
+    await new Promise(resolve => {
+      setTimeout(resolve, 10000)
+    })
+    console.log(new Date())
+  }
+
+  console.log('gameLoop ended')
 }
