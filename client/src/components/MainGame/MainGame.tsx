@@ -1,6 +1,7 @@
 import { useGameStoreContext } from '@/store/gameStore'
-import GamePlayerCard from '@/components/MainGame/GamePlayerCard'
 import CardLayout from '@/components/ui/CardLayout'
+import GamePlayerCard from '@/components/MainGame/GamePlayerCard'
+import QuestionComponent from '@/components/MainGame/QuestionComponent'
 
 export default function MainGame() {
   const currentQuestion = useGameStoreContext(state => state.currentQuestion)
@@ -10,14 +11,7 @@ export default function MainGame() {
       {/* rkq: remove */}
       <div>GAME SHOULD START!!!</div>
       <div>
-        {currentQuestion ? (
-          <>
-            <div>This should be a component to return question</div>
-            <div>{currentQuestion.questionText}</div>
-          </>
-        ) : (
-          <div>Loading...</div>
-        )}
+        {currentQuestion ? <QuestionComponent question={currentQuestion} /> : <div>Loading...</div>}
       </div>
       <div>
         <CardLayout>
