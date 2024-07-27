@@ -7,6 +7,7 @@ export const createGameStore = (initProps?: Partial<GameProps>) => {
     gameId: '',
     status: 'waitingToStart',
     players: [],
+    currentQuestion: null,
   }
   return createStore<GameState>()(
     immer(set => ({
@@ -15,7 +16,12 @@ export const createGameStore = (initProps?: Partial<GameProps>) => {
       setGameId: gameId => set({ gameId }),
       updateGameData: gameData => {
         console.log('store got gameData')
-        set({ gameId: gameData.gameId, status: gameData.status, players: gameData.players })
+        set({
+          gameId: gameData.gameId,
+          status: gameData.status,
+          players: gameData.players,
+          currentQuestion: gameData.currentQuestion,
+        })
       },
       // rkq: Is this needed?
       resetGameId: () => set({ gameId: '' }),

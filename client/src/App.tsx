@@ -1,9 +1,10 @@
-import useConnection from '@/hooks/useConnection'
 import { useUserStoreContext } from '@/store/userStore'
+import { useGameStoreContext } from '@/store/gameStore'
 import useGameEvents from '@/hooks/useGameEvents'
+import useConnection from '@/hooks/useConnection'
 import Login from '@/components/Login'
 import GameLobby from '@/components/GameLobby'
-import { useGameStoreContext } from '@/store/gameStore'
+import MainGame from '@/components/MainGame/MainGame'
 
 function App() {
   useConnection()
@@ -21,7 +22,7 @@ function App() {
       <div>Username: {user?.username}</div>
       <hr></hr>
       <div>{gameId}</div>
-      {gameStatus !== 'waitingToStart' && <div>GAME SHOULD START!!!</div>}
+      {gameStatus !== 'waitingToStart' && <MainGame />}
       {connectionStatus === 'connected' ? <GameLobby /> : <Login />}
     </div>
   )
