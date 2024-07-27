@@ -3,6 +3,7 @@ import { socket } from '@/libs/socket'
 import CopyButton from '@/components/CopyButton'
 import Button from '@/components/ui/Button'
 import LobbyPlayerCard from '@/components/GameLobby/LobbyPlayerCard'
+import CardLayout from '@/components/ui/CardLayout'
 
 type Props = {
   onGoBack: () => void
@@ -15,6 +16,7 @@ export default function CreateGame({ onGoBack }: Props) {
 
   const cancelGameCreation = () => {
     socket.emit('leaveGame', gameId)
+    // rkq: does not work???
     resetGameStore()
     onGoBack()
   }
@@ -30,10 +32,11 @@ export default function CreateGame({ onGoBack }: Props) {
         <>Generating game ID...</>
       )}
       <Button onClick={cancelGameCreation}>Back</Button>
-      {/* rkq: list of current players */}
-      {players.map(player => (
-        <LobbyPlayerCard key={player.userId} player={player} />
-      ))}
+      <CardLayout>
+        {players.map(player => (
+          <LobbyPlayerCard key={player.userId} player={player} />
+        ))}
+      </CardLayout>
     </>
   )
 }
