@@ -60,4 +60,6 @@ npm run preview
 
 🗹 As players, we can all confirm that we are ready and start the game
 
-☐ As a user I can receive a question from the server and answer it.
+🗹 As a player I can receive a question from the server and answer it.
+
+☐ As a player I can see the correct answer after answering the question.

@@ -1,6 +1,7 @@
 import type { GameData } from '@server/types'
 
 export type SessionId = string
+export type GameId = string
 
 export interface User {
   userId: string
@@ -12,13 +13,14 @@ export type ServerResponse = {
 }
 
 export type ClientToServerEvents = {
-  createGame: (callback: (gameId: string) => void) => void
-  leaveGame: (gameId: string) => void
-  joinGame: (gameId: string, callback: (response: ServerResponse) => void) => void
-  playerReady: (gameId: string) => void
+  createGame: (callback: (gameId: GameId) => void) => void
+  leaveGame: (gameId: GameId) => void
+  joinGame: (gameId: GameId, callback: (response: ServerResponse) => void) => void
+  playerReady: (gameId: GameId) => void
+  answer: (gameId: GameId, questionId: string, answerId: string) => void
 
   // rkq: no longer needed?
-  cancelRoom: (gameId: string) => void
+  cancelRoom: (gameId: GameId) => void
 
   // rkq: delete everything below
   // getQuestion: (callback: (question: Question) => void) => void
