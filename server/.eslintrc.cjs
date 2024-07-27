@@ -15,8 +15,6 @@ module.exports = {
   },
   ignorePatterns: ['**/*.js', '**/*.cjs', '**/*.mjs'],
   rules: {
-    // we can override some problematic import rules here
-    // that can cause issues when using import aliases.
     'import/extensions': 'off',
     'import/no-extraneous-dependencies': 'off',
     '@typescript-eslint/consistent-type-imports': 'error',
@@ -35,12 +33,10 @@ module.exports = {
         ],
       },
     ],
-
-    // functions are always hoisted, so we can use them before they are defined
-    // which in various cases improves readability
     'no-use-before-define': ['error', { functions: false }],
     '@typescript-eslint/no-use-before-define': ['error', { functions: false }],
     'no-param-reassign': 'off',
     'import/prefer-default-export': 'off',
+    'no-await-in-loop': 'off',
   },
 }
