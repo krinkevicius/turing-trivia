@@ -1,4 +1,5 @@
 import { useGameStoreContext } from '@/store/gameStore'
+import GamePlayerCard from '@/components/MainGame/GamePlayerCard'
 
 export default function MainGame() {
   const currentQuestion = useGameStoreContext(state => state.currentQuestion)
@@ -19,7 +20,7 @@ export default function MainGame() {
       </div>
       <div>
         {players.map(player => (
-          <div key={player.userId}>{player.username}</div>
+          <GamePlayerCard key={player.userId} player={player} />
         ))}
       </div>
     </>
