@@ -14,7 +14,7 @@ describe('Body', () => {
 
   it('should render connecting text when user is connecting', () => {
     renderBody('connecting')
-    expect(screen.getByText(/Connecting.../)).toBeInTheDocument()
+    expect(screen.getByTestId('loading-lobby')).toBeInTheDocument()
   })
 
   it('should render GameLobby when user is connected and game is waiting to start', () => {
