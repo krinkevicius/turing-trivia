@@ -23,6 +23,7 @@ const testPlayer: Player = {
   status: 'waiting',
   score: 0,
   selectedAnswer: null,
+  color: '#dc3434',
 }
 
 describe('LobbyPlayerCard', () => {
@@ -45,6 +46,7 @@ describe('LobbyPlayerCard', () => {
       status: 'waiting',
       score: 0,
       selectedAnswer: null,
+      color: '#dc8034',
     }
 
     renderLobbyUserCard(differentPlayer)

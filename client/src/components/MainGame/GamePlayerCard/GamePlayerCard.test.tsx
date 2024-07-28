@@ -11,6 +11,7 @@ describe('GamePlayerCard', () => {
       status: 'waiting',
       score: 0,
       selectedAnswer: null,
+      color: '#dc3434',
     }
 
     render(<GamePlayerCard player={testPlayer} />)

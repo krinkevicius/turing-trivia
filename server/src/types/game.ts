@@ -4,6 +4,7 @@ export interface Player extends User {
   status: 'waiting' | 'ready'
   selectedAnswer: string | null
   score: number
+  color: string
 }
 
 export type APIParams = {

@@ -19,16 +19,29 @@ export default function LobbyPlayerCard({ player }: Props) {
   if (!user) return null
 
   return (
-    <>
-      <div>{player.username}</div>
-      {/* rkq: Add some sort of avatar? */}
-      {/* rkq: add height */}
-      <div>{player.status === 'ready' && <div>Ready!</div>}</div>
+    <div
+      className="flex flex-row justify-between items-center h-20 w-full rounded border-2 p-2"
+      style={{
+        borderColor: player.color,
+      }}
+    >
+      <div className="flex flex-col">
+        <div>{player.username}</div>
+        <div className="min-h-4 md:min-h-5">
+          {player.status === 'ready' && (
+            <div className="text-textSecondary text-xs md:text-sm">Ready!</div>
+          )}
+        </div>
+      </div>
       {user.userId === player.userId && (
-        <Button onClick={handleReady} disabled={player.status === 'ready'}>
+        <Button
+          className="w-32 h-14 md:w-40"
+          onClick={handleReady}
+          disabled={player.status === 'ready'}
+        >
           {player.status === 'waiting' ? "I'm ready!" : 'Waiting for other players...'}
         </Button>
       )}
-    </>
+    </div>
   )
 }

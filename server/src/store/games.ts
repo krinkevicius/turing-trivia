@@ -1,6 +1,8 @@
 // rkq: remove rule
 /* eslint-disable no-console */
+import { PLAYER_COLORS } from '@server/consts'
 import type { GameData, User, ServerResponse, Question, GameId } from '@server/types'
+import shuffleArray from '@server/utils/shuffleArray'
 
 type ServerGameStore = {
   gameStorage: Map<string, GameData>
@@ -40,7 +42,9 @@ export default function initializeGameStore(): ServerGameStore {
     if (!game || game.status !== 'waitingToStart' || game.players.length >= 4)
       return { status: 'error' }
 
-    game.players.push({ ...user, status: 'waiting', score: 0, selectedAnswer: null })
+    const color = shuffleArray(PLAYER_COLORS.filter(c => !game.players.some(p => p.color === c)))[0]
+
+    game.players.push({ ...user, status: 'waiting', score: 0, selectedAnswer: null, color })
 
     return { status: 'ok' }
   }
@@ -87,6 +91,7 @@ export default function initializeGameStore(): ServerGameStore {
       }
       return p
     })
+    game.currentQuestion.showAnswers = true
     console.log('game.players', game.players)
   }
 

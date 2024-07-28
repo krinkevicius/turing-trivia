@@ -5,7 +5,10 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 export default function CardLayout({ children, className, ...props }: Props) {
   return (
     // rkq: decide on the styles
-    <div className={`flex flex-row ${className}`} {...props}>
+    <div
+      className={`flex flex-col gap-2 md:grid md:grid-cols-2  xl:flex xl:flex-row ${className}`}
+      {...props}
+    >
       {children}
     </div>
   )
