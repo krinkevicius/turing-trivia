@@ -2,28 +2,27 @@ import { useUserStoreContext } from '@/store/userStore'
 import { useGameStoreContext } from '@/store/gameStore'
 import useGameEvents from '@/hooks/useGameEvents'
 import useConnection from '@/hooks/useConnection'
-import Login from '@/components/Login'
 import GameLobby from '@/components/GameLobby'
 import MainGame from '@/components/MainGame/MainGame'
+import Header from '@/components/Header'
 
 function App() {
   useConnection()
   useGameEvents()
   const connectionStatus = useUserStoreContext(state => state.connectionStatus)
-  const user = useUserStoreContext(state => state.user)
-  const sessionId = useUserStoreContext(state => state.sessionId)
-  const gameId = useGameStoreContext(state => state.gameId)
   const gameStatus = useGameStoreContext(state => state.status)
+  // rkq: remove this after visual tests
+  const gameId = useGameStoreContext(state => state.gameId)
+
   return (
-    <div>
-      <div>Connection status: {connectionStatus}</div>
-      <div>Session ID: {sessionId}</div>
-      <div>User ID: {user?.userId}</div>
-      <div>Username: {user?.username}</div>
-      <hr></hr>
-      <div>{gameId}</div>
-      {gameStatus !== 'waitingToStart' && <MainGame />}
-      {connectionStatus === 'connected' ? <GameLobby /> : <Login />}
+    <div className="bg-bgPrimary text-textPrimary font-poppins">
+      <div className="h-screen w-screen container mx-auto px-4">
+        <Header />
+        {/* rkq: remove this after visual tests */}
+        <div>GAME ID: {gameId}</div>
+        {gameStatus !== 'waitingToStart' && <MainGame />}
+        {connectionStatus === 'connected' ? <GameLobby /> : <></>}
+      </div>
     </div>
   )
 }
