@@ -3,6 +3,7 @@ import { useUserStoreContext } from '@/store/userStore'
 import LoginModal from '@/components/Header/LoginModal'
 import Button from '@/components/ui/Button'
 import { socket } from '@/libs/socket'
+import HeaderLayout from '@/components/ui/HeaderLayout'
 
 export default function Header() {
   const user = useUserStoreContext(state => state.user)
@@ -34,9 +35,11 @@ export default function Header() {
   return (
     <>
       <div className="relative flex flex-row items-center justify-center py-4">
-        <div className="absolute left-1/2 transform -translate-x-1/2 text-3xl md:text-4xl font-bold text-center">
+        {/* <div className="absolute left-1/2 transform -translate-x-1/2 text-xl sm:text-2xl md:text-4xl font-bold text-center"> */}
+        <HeaderLayout className="absolute left-1/2 transform -translate-x-1/2">
           Turing Trivia
-        </div>
+        </HeaderLayout>
+        {/* </div> */}
         <div className="ml-auto flex flex-col">
           {connectionStatus === 'connected' ? (
             <>
