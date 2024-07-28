@@ -4,6 +4,7 @@ import CopyButton from '@/components/CopyButton'
 import Button from '@/components/ui/Button'
 import LobbyPlayerCard from '@/components/GameLobby/LobbyPlayerCard'
 import CardLayout from '@/components/ui/CardLayout'
+import HeaderLayout from '@/components/ui/HeaderLayout'
 
 type Props = {
   onGoBack: () => void
@@ -22,14 +23,16 @@ export default function CreateGame({ onGoBack }: Props) {
   }
 
   return (
-    <>
+    <div>
       {gameId ? (
-        <>
-          <div>Game ID: {gameId}</div>
-          <CopyButton textToCopy={gameId} />
-        </>
+        <div className="flex flex-col justify-center items-center gap-y-3 mt-4">
+          <HeaderLayout>
+            <span className="mr-4">Game ID: {gameId}</span>
+            <CopyButton textToCopy={gameId} />
+          </HeaderLayout>
+        </div>
       ) : (
-        <>Generating game ID...</>
+        <HeaderLayout>Generating game ID...</HeaderLayout>
       )}
       <Button onClick={cancelGameCreation}>Back</Button>
       <CardLayout>
@@ -37,6 +40,6 @@ export default function CreateGame({ onGoBack }: Props) {
           <LobbyPlayerCard key={player.userId} player={player} />
         ))}
       </CardLayout>
-    </>
+    </div>
   )
 }

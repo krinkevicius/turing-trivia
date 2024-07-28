@@ -1,3 +1,4 @@
+import Button from '@/components/ui/Button'
 import { useState } from 'react'
 
 type Props = {
@@ -18,8 +19,12 @@ export default function CopyButton({ textToCopy, delay = 3000 }: Props) {
   }
 
   return (
-    <button disabled={!textToCopy} onClick={copyText}>
+    <Button
+      className="bg-copyBtn w-20 hover:bg-copyBtnHover focus:ring-copyBtnHover"
+      disabled={!textToCopy}
+      onClick={copyText}
+    >
       {buttonText}
-    </button>
+    </Button>
   )
 }
