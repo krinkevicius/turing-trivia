@@ -1,6 +1,6 @@
 // rkq: remove rule
 /* eslint-disable no-console */
-import { PLAYER_COLORS } from '@server/consts'
+import { MAX_PLAYERS, MIN_PLAYERS, PLAYER_COLORS } from '@server/consts'
 import type { GameData, User, ServerResponse, Question, GameId } from '@server/types'
 import shuffleArray from '@server/utils/shuffleArray'
 
@@ -39,7 +39,7 @@ export default function initializeGameStore(): ServerGameStore {
   function joinGame(gameId: string, user: User): ServerResponse {
     const game = gameStorage.get(gameId)
 
-    if (!game || game.status !== 'waitingToStart' || game.players.length >= 4)
+    if (!game || game.status !== 'waitingToStart' || game.players.length >= MAX_PLAYERS)
       return { status: 'error' }
 
     const color = shuffleArray(PLAYER_COLORS.filter(c => !game.players.some(p => p.color === c)))[0]
@@ -55,7 +55,7 @@ export default function initializeGameStore(): ServerGameStore {
 
     game.players = game.players.map(p => (p.userId === userId ? { ...p, status: 'ready' } : p))
 
-    if (game.players.length >= 2 && game.players.every(p => p.status === 'ready')) {
+    if (game.players.length >= MIN_PLAYERS && game.players.every(p => p.status === 'ready')) {
       game.status = 'inProgress'
     }
     console.log(game)
