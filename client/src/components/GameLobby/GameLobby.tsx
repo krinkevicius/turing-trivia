@@ -3,6 +3,9 @@ import { socket } from '@/libs/socket'
 import { useGameStoreContext } from '@/store/gameStore'
 import CreateGame from '@/components/GameLobby/CreateGame'
 import JoinGame from '@/components/GameLobby/JoinGame'
+import HeaderLayout from '@/components/ui/HeaderLayout'
+import Button from '@/components/ui/Button'
+import OptionLayout from '@/components/ui/OptionLayout'
 
 type LobbyAction = 'create' | 'join' | null
 
@@ -35,10 +38,20 @@ export default function GameLobby() {
 
   if (!lobbyAction)
     return (
-      <div data-testid="game-lobby">
-        <h1>Create or join a game</h1>
-        <button onClick={handleCreateGame}>Create Game</button>
-        <button onClick={handleJoinGame}>Join Game</button>
+      <div data-testid="game-lobby" className="h-full">
+        <OptionLayout
+          header={<HeaderLayout>Create or join a game</HeaderLayout>}
+          option1={
+            <Button className="bg-red-500 w-full" onClick={handleCreateGame}>
+              Create Game
+            </Button>
+          }
+          option2={
+            <Button className="bg-red-500 w-full" onClick={handleJoinGame}>
+              Join Game
+            </Button>
+          }
+        />
       </div>
     )
 

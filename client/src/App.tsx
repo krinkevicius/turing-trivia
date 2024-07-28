@@ -16,7 +16,10 @@ function App() {
         <Header />
         {/* rkq: remove this after visual tests */}
         <div>GAME ID: {gameId}</div>
-        <Body />
+        {/* rkq: change */}
+        <div className="h-[calc(100vh-200px)]">
+          <Body />
+        </div>
       </div>
     </div>
   )
