@@ -20,7 +20,7 @@ export default function LobbyPlayerCard({ player }: Props) {
 
   return (
     <div
-      className="flex flex-row justify-between items-center h-20 w-full rounded border-2 p-2"
+      className="flex flex-row justify-between items-center h-20 w-full rounded border-2 p-2 bg-bgTetrary xl:w-1/4"
       style={{
         borderColor: player.color,
       }}
@@ -38,6 +38,7 @@ export default function LobbyPlayerCard({ player }: Props) {
           className="w-32 h-14 md:w-40"
           onClick={handleReady}
           disabled={player.status === 'ready'}
+          colorScheme="secondary"
         >
           {player.status === 'waiting' ? "I'm ready!" : 'Waiting for other players...'}
         </Button>

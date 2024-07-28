@@ -23,23 +23,29 @@ export default function CreateGame({ onGoBack }: Props) {
   }
 
   return (
-    <div>
-      {gameId ? (
-        <div className="flex flex-col justify-center items-center gap-y-3 mt-4">
-          <HeaderLayout>
-            <span className="mr-4">Game ID: {gameId}</span>
-            <CopyButton textToCopy={gameId} />
-          </HeaderLayout>
-        </div>
-      ) : (
-        <HeaderLayout>Generating game ID...</HeaderLayout>
-      )}
-      <Button onClick={cancelGameCreation}>Back</Button>
-      <CardLayout>
-        {players.map(player => (
-          <LobbyPlayerCard key={player.userId} player={player} />
-        ))}
-      </CardLayout>
+    <div className="flex flex-col justify-between h-full">
+      <div>
+        {gameId ? (
+          <div className="flex flex-col justify-center items-center gap-y-3 mt-4">
+            <HeaderLayout>
+              <span className="mr-4">Game ID: {gameId}</span>
+              <CopyButton textToCopy={gameId} />
+            </HeaderLayout>
+          </div>
+        ) : (
+          <HeaderLayout>Generating game ID...</HeaderLayout>
+        )}
+        <CardLayout className="mt-4">
+          {players.map(player => (
+            <LobbyPlayerCard key={player.userId} player={player} />
+          ))}
+        </CardLayout>
+      </div>
+      <div className="pb-1">
+        <Button onClick={cancelGameCreation} colorScheme="secondary">
+          Back
+        </Button>
+      </div>
     </div>
   )
 }
