@@ -9,7 +9,7 @@ export default function MainGame() {
   return (
     <>
       {/* rkq: remove */}
-      <div>GAME SHOULD START!!!</div>
+      <div data-testid="main-game">GAME SHOULD START!!!</div>
       <div>
         {currentQuestion ? <QuestionComponent question={currentQuestion} /> : <div>Loading...</div>}
       </div>

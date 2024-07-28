@@ -35,7 +35,7 @@ export default function GameLobby() {
 
   if (!lobbyAction)
     return (
-      <div>
+      <div data-testid="game-lobby">
         <h1>Create or join a game</h1>
         <button onClick={handleCreateGame}>Create Game</button>
         <button onClick={handleJoinGame}>Join Game</button>

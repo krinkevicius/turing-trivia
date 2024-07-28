@@ -1,16 +1,12 @@
-import { useUserStoreContext } from '@/store/userStore'
 import { useGameStoreContext } from '@/store/gameStore'
 import useGameEvents from '@/hooks/useGameEvents'
 import useConnection from '@/hooks/useConnection'
-import GameLobby from '@/components/GameLobby'
-import MainGame from '@/components/MainGame/MainGame'
 import Header from '@/components/Header'
+import Body from '@/components/Body'
 
 function App() {
   useConnection()
   useGameEvents()
-  const connectionStatus = useUserStoreContext(state => state.connectionStatus)
-  const gameStatus = useGameStoreContext(state => state.status)
   // rkq: remove this after visual tests
   const gameId = useGameStoreContext(state => state.gameId)
 
@@ -20,8 +16,7 @@ function App() {
         <Header />
         {/* rkq: remove this after visual tests */}
         <div>GAME ID: {gameId}</div>
-        {gameStatus !== 'waitingToStart' && <MainGame />}
-        {connectionStatus === 'connected' ? <GameLobby /> : <></>}
+        <Body />
       </div>
     </div>
   )
