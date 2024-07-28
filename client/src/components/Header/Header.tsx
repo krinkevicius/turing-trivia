@@ -58,7 +58,7 @@ export default function Header() {
       <div>Session ID: {sessionId}</div>
       <div>User ID: {user?.userId}</div>
       <div>Username: {user?.username}</div>
-      <hr className="border-t-3 border-borderPrimary" />
+      <hr className="mb-4 border-t-3 border-borderPrimary" />
       {showModal && (
         <LoginModal open={showModal} onClose={handleModalClose}>
           <div className="flex flex-col py-4 gap-y-2">

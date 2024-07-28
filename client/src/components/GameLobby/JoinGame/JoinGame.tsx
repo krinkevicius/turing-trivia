@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { socket } from '@/libs/socket'
 import Button from '@/components/ui/Button'
+import HeaderLayout from '@/components/ui/HeaderLayout'
 
 type Props = {
   onGoBack: () => void
@@ -32,15 +33,31 @@ export default function JoinGame({ onGoBack, onSuccess }: Props) {
   }
 
   return (
-    <>
-      <input type="text" onChange={handleInputChange} placeholder="Type game code here..." />
-      <Button disabled={!userInput} onClick={joinGame}>
-        Join
-      </Button>
-      {/* rkq: add min height to not move text around */}
-      {/* rkq: just  joinGameError?*/}
-      <div>{joinGameError && <p>{joinGameError}</p>}</div>
-      <Button onClick={cancelGameJoin}>Back</Button>
-    </>
+    <div className="flex flex-col justify-between h-full">
+      <div>
+        <HeaderLayout>Paste the game code to join!</HeaderLayout>
+        <div className="flex flex-col">
+          <div className="flex flex-row mt-4 gap-2">
+            <input
+              className="h-14 shadow appearance-none border-borderPrimary border-2 rounded w-full py-2 px-3 text-textSecondary mb-3 bg-bgPrimary focus:outline-none focus:ring-2 focus:ring-borderPrimary focus:ring-opacity-50 focus:shadow-outline"
+              type="text"
+              onChange={handleInputChange}
+              placeholder="Type game code here..."
+            />
+            <Button className="!w-40 !h-14" disabled={!userInput} onClick={joinGame}>
+              Join
+            </Button>
+          </div>
+          <div className="min-h-5">
+            {joinGameError && <p className="text-textSecondary text-sm">{joinGameError}</p>}
+          </div>
+        </div>
+      </div>
+      <div className="pb-1">
+        <Button onClick={cancelGameJoin} colorScheme="secondary">
+          Back
+        </Button>
+      </div>
+    </div>
   )
 }

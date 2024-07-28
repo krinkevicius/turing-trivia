@@ -42,12 +42,12 @@ export default function GameLobby() {
         <OptionLayout
           header={<HeaderLayout>Create or join a game</HeaderLayout>}
           option1={
-            <Button className="bg-red-500 w-full" onClick={handleCreateGame}>
+            <Button className="w-full" onClick={handleCreateGame}>
               Create Game
             </Button>
           }
           option2={
-            <Button className="bg-red-500 w-full" onClick={handleJoinGame}>
+            <Button className="w-full" onClick={handleJoinGame}>
               Join Game
             </Button>
           }
