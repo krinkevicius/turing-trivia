@@ -34,23 +34,25 @@ export default function Header() {
 
   return (
     <>
-      <div className="relative flex flex-row items-center justify-center py-4">
-        {/* <div className="absolute left-1/2 transform -translate-x-1/2 text-xl sm:text-2xl md:text-4xl font-bold text-center"> */}
-        <HeaderLayout className="absolute left-1/2 transform -translate-x-1/2">
-          Turing Trivia
-        </HeaderLayout>
-        {/* </div> */}
-        <div className="ml-auto flex flex-col">
-          {connectionStatus === 'connected' ? (
-            <>
-              <p className="text-right text-xs">Logged in as</p>
-              <p className="text-right text-sm">{user?.username}</p>
-            </>
-          ) : (
-            <Button disabled={connectionStatus === 'connecting'} onClick={() => setShowModal(true)}>
-              Login
-            </Button>
-          )}
+      <div className="flex flex-row items-center justify-center py-4">
+        <div className="flex-1"></div>
+        <HeaderLayout>Turing Trivia</HeaderLayout>
+        <div className="flex-1">
+          <div className="ml-auto flex flex-col">
+            {connectionStatus === 'connected' ? (
+              <>
+                <p className="text-right text-xs">Logged in as</p>
+                <p className="text-right text-sm">{user?.username}</p>
+              </>
+            ) : (
+              <Button
+                disabled={connectionStatus === 'connecting'}
+                onClick={() => setShowModal(true)}
+              >
+                Login
+              </Button>
+            )}
+          </div>
         </div>
       </div>
       {/* rkq: remove these after visual testing! */}

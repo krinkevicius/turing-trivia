@@ -18,7 +18,7 @@ export default function GamePlayerCard({ player }: Props) {
       {/* rkq: move to show selected answer? */}
       {/* <div
         // src: https://css-tricks.com/the-shapes-of-css/#aa-cone-shape-via-omid-rasouli
-        className="w-0 h-0 rotate-[55deg] rounded-[50%] border-t-[50px] border-x-[35px] border-x-transparent border-solid"
+        className="w-0 h-0 rotate-[270deg] rounded-[50%] border-t-[50px] border-x-[35px] border-x-transparent border-solid"
         style={{
           borderTopColor: player.color,
         }}

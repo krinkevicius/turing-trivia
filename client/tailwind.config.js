@@ -16,6 +16,8 @@ export default {
         secondaryBtnHover: '#3b3d45',
         copyBtn: '#24dc62',
         copyBtnHover: '#24ff62',
+        correctAnswer: '24dc62',
+        incorrectAnswer: '#dc3434',
       },
       fontFamily: {
         poppins: ['Poppins', 'sans-serif'],
