@@ -34,7 +34,7 @@ describe('formatQuestions', () => {
 
     expect(questions[0]).toEqual({
       id: '1',
-      category: 'test-category',
+      category: 'Random',
       questionText: 'question text',
       showAnswers: false,
       answers: [
