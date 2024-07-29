@@ -15,6 +15,7 @@ import generateRandomId from '@server/utils/generateRandomId'
 import { initializeGameStore, initializeSessionStore } from '@server/store'
 import getQuestions from '@server/services'
 import { CATEGORIES } from '@server/consts'
+import { logger } from '@server/logger'
 // import gameLoop from '@server/gameLoop'
 
 const app = express()
@@ -114,7 +115,7 @@ io.on('connection', socket => {
   })
 })
 server.listen(SOCKET_PORT, () => {
-  console.log('Server running at port %d', SOCKET_PORT)
+  logger.info('Server running at port %d', SOCKET_PORT)
 })
 
 function updateGame(
@@ -147,9 +148,10 @@ async function gameLoop(
     games.setQuestion(gameId, questions[i])
     updateGame(gameId, socket)
     await new Promise(resolve => {
-      setTimeout(resolve, 15000)
+      setTimeout(resolve, 10000)
     })
     games.checkAnswers(gameId)
+    updateGame(gameId, socket)
     console.log(new Date())
   }
 
