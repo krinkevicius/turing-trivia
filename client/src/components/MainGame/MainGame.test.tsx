@@ -7,7 +7,7 @@ describe('MainGame', () => {
   it('should render loading text when question is not received from the server', () => {
     renderMainGame()
 
-    expect(screen.getByText('Loading...')).toBeInTheDocument()
+    expect(screen.getByTestId('loading-question')).toBeInTheDocument()
   })
 
   it('should render the question text when question is received from the server', () => {

@@ -2,16 +2,15 @@ import { useGameStoreContext } from '@/store/gameStore'
 import CardLayout from '@/components/ui/CardLayout'
 import GamePlayerCard from '@/components/MainGame/GamePlayerCard'
 import QuestionComponent from '@/components/MainGame/QuestionComponent'
+import LoadingQuestion from '@/components/ui/loading/LoadingQuestion'
 
 export default function MainGame() {
   const currentQuestion = useGameStoreContext(state => state.currentQuestion)
   const players = useGameStoreContext(state => state.players)
   return (
-    <>
-      {/* rkq: remove */}
-      <div data-testid="main-game">GAME SHOULD START!!!</div>
+    <div data-testid="main-game" className="flex flex-col justify-between h-full pb-1">
       <div>
-        {currentQuestion ? <QuestionComponent question={currentQuestion} /> : <div>Loading...</div>}
+        {currentQuestion ? <QuestionComponent question={currentQuestion} /> : <LoadingQuestion />}
       </div>
       <div>
         <CardLayout>
@@ -20,6 +19,6 @@ export default function MainGame() {
           ))}
         </CardLayout>
       </div>
-    </>
+    </div>
   )
 }

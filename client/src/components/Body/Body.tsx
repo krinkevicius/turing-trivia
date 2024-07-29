@@ -2,7 +2,7 @@ import { useGameStoreContext } from '@/store/gameStore'
 import { useUserStoreContext } from '@/store/userStore'
 import GameLobby from '@/components/GameLobby'
 import MainGame from '@/components/MainGame'
-import LoadingLobby from '@/components/loading/LoadingLobby'
+import LoadingLobby from '@/components/ui/loading/LoadingLobby'
 
 export default function Body() {
   const connectionStatus = useUserStoreContext(state => state.connectionStatus)

@@ -35,7 +35,7 @@ export default function CreateGame({ onGoBack }: Props) {
         ) : (
           <HeaderLayout>Generating game ID...</HeaderLayout>
         )}
-        <CardLayout className="mt-4">
+        <CardLayout className="mt-4 md:grid md:grid-cols-2">
           {players.map(player => (
             <LobbyPlayerCard key={player.userId} player={player} />
           ))}

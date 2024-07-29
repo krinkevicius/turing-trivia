@@ -9,8 +9,9 @@ type Props = {
 
 export default function QuestionComponent({ question }: Props) {
   const gameId = useGameStoreContext(state => state.gameId)
+  const players = useGameStoreContext(state => state.players)
   //rkq: initiate to be the same as showAnswers prop?
-  const [isAnswered, setIsAnswered] = useState<boolean>(false)
+  const [isAnswered, setIsAnswered] = useState<boolean>(question.showAnswers)
 
   function handleAnswer(answerId: string) {
     console.log(
@@ -25,9 +26,22 @@ export default function QuestionComponent({ question }: Props) {
       <div>{question.questionText}</div>
       <div>
         {question.answers.map(answer => (
-          <button key={answer.id} disabled={isAnswered} onClick={() => handleAnswer(answer.id)}>
-            {answer.answerText}
-          </button>
+          <div key={answer.id}>
+            <button disabled={isAnswered} onClick={() => handleAnswer(answer.id)}>
+              {answer.answerText}
+            </button>
+            {question.showAnswers && (
+              <div>
+                <p>Selected by:</p>
+                {players.map(
+                  player =>
+                    player.selectedAnswer === answer.id && (
+                      <div key={player.userId}>{player.username}</div>
+                    ),
+                )}
+              </div>
+            )}
+          </div>
         ))}
       </div>
     </>

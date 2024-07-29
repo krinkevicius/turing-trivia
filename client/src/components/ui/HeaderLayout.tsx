@@ -4,7 +4,9 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 
 export default function HeaderLayout({ children, className }: Props) {
   return (
-    <div className={`text-xl sm:text-2xl md:text-4xl font-bold text-center ${className}`}>
+    <div
+      className={`flex justify-center items-center text-xl sm:text-2xl md:text-4xl font-bold text-center ${className}`}
+    >
       {children}
     </div>
   )

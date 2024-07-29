@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import type { Player } from '@server/shared'
-
+import { UserStoreProvider } from '@/store/userStore'
 import GamePlayerCard from '.'
 
 describe('GamePlayerCard', () => {
@@ -14,7 +14,11 @@ describe('GamePlayerCard', () => {
       color: '#dc3434',
     }
 
-    render(<GamePlayerCard player={testPlayer} />)
+    render(
+      <UserStoreProvider>
+        <GamePlayerCard player={testPlayer} />
+      </UserStoreProvider>,
+    )
 
     expect(screen.getByText('user123')).toBeInTheDocument()
     expect(screen.getByText('0')).toBeInTheDocument()
