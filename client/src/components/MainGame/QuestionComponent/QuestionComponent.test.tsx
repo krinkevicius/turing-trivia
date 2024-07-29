@@ -90,12 +90,24 @@ describe('QuestionComponent', () => {
       'test-answer-1',
     )
   })
+
+  it('should show timer if showAnswers is false', () => {
+    renderQuestionComponent()
+
+    expect(screen.getByTestId('timer')).toBeInTheDocument()
+  })
+
+  it('should not show timer if showAnswers is true', () => {
+    renderQuestionComponent({ question: { ...testQuestion, showAnswers: true } })
+
+    expect(screen.queryByTestId('timer')).not.toBeInTheDocument()
+  })
 })
 
-function renderQuestionComponent() {
+function renderQuestionComponent({ question = testQuestion }: { question?: Question } = {}) {
   return render(
     <GameStoreProvider gameId="test-game-id">
-      <QuestionComponent question={testQuestion} />
+      <QuestionComponent question={question} />
     </GameStoreProvider>,
   )
 }

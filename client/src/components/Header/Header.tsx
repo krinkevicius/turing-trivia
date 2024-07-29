@@ -38,7 +38,7 @@ export default function Header() {
         <div className="flex-1"></div>
         <HeaderLayout>Turing Trivia</HeaderLayout>
         <div className="flex-1">
-          <div className="ml-auto flex flex-col">
+          <div className="ml-auto flex flex-col items-end">
             {connectionStatus === 'connected' ? (
               <>
                 <p className="text-right text-xs">Logged in as</p>
@@ -46,6 +46,7 @@ export default function Header() {
               </>
             ) : (
               <Button
+                className="w-20"
                 disabled={connectionStatus === 'connecting'}
                 onClick={() => setShowModal(true)}
               >

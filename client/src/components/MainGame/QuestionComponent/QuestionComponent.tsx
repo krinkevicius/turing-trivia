@@ -1,5 +1,6 @@
 import AnswerComponent from '@/components/MainGame/AnswerComponent'
 import QuestionLayout from '@/components/ui/QuestionLayout'
+import Timer from '@/components/ui/Timer'
 import { socket } from '@/libs/socket'
 import { useGameStoreContext } from '@/store/gameStore'
 import type { Question } from '@server/shared'
@@ -34,7 +35,9 @@ export default function QuestionComponent({ question }: Props) {
               <div className="text-center text-sm">{question.category}</div>
             </div>
             <div className="flex-1">
-              <div className="w-20 h-20 bg-green-500 ml-auto">Timer</div>
+              <div className="w-20 h-20 p-2 ml-auto">
+                {!question.showAnswers && <Timer duration={10} />}
+              </div>
             </div>
           </div>
         }
@@ -43,7 +46,7 @@ export default function QuestionComponent({ question }: Props) {
             key={answer.id}
             answer={answer}
             showAnswers={question.showAnswers}
-            disabled={isAnswered}
+            disabled={isAnswered || question.showAnswers}
             onAnswer={handleAnswer}
           />
         ))}

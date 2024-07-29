@@ -15,14 +15,6 @@ export default function GamePlayerCard({ player }: Props) {
         borderColor: player.color,
       }}
     >
-      {/* rkq: move to show selected answer? */}
-      {/* <div
-        // src: https://css-tricks.com/the-shapes-of-css/#aa-cone-shape-via-omid-rasouli
-        className="w-0 h-0 rotate-[270deg] rounded-[50%] border-t-[50px] border-x-[35px] border-x-transparent border-solid"
-        style={{
-          borderTopColor: player.color,
-        }}
-      ></div> */}
       <div>{player.username}</div>
       <div>{player.score}</div>
     </div>
