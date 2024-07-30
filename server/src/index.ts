@@ -2,7 +2,6 @@
 /* eslint-disable no-console */
 import { createServer } from 'node:http'
 import express from 'express'
-import type { Socket } from 'socket.io'
 import { Server } from 'socket.io'
 import type { EventsMap } from '@socket.io/component-emitter'
 import type {
@@ -71,14 +70,14 @@ io.on('connection', socket => {
     games.createNewGame(gameId, user)
     socket.join(gameId)
     callback(gameId)
-    updateGame(gameId, socket)
+    updateGame(gameId)
   })
 
   socket.on('leaveGame', gameId => {
     console.log(`server should leaveGame ID ${gameId}`)
     games.leaveGame(gameId, user)
     socket.leave(gameId)
-    updateGame(gameId, socket)
+    updateGame(gameId)
     console.log(games.getGameById(gameId))
   })
 
@@ -86,7 +85,7 @@ io.on('connection', socket => {
     const response = games.joinGame(gameId, user)
     if (response.status === 'ok') {
       socket.join(gameId)
-      updateGame(gameId, socket)
+      updateGame(gameId)
     }
     callback(response)
   })
@@ -95,10 +94,10 @@ io.on('connection', socket => {
     console.log(`player ${user.userId} is ready to play ${gameId}`)
     games.setPlayerReady(gameId, user.userId)
 
-    updateGame(gameId, socket)
+    updateGame(gameId)
 
     if (games.isGameReady(gameId)) {
-      gameLoop(gameId, socket)
+      gameLoop(gameId)
     }
   })
 
@@ -114,27 +113,15 @@ server.listen(SOCKET_PORT, () => {
   logger.info('Server running at port %d', SOCKET_PORT)
 })
 
-// rkq: toEveryone is not needed at all?
-function updateGame(
-  gameId: string,
-  socket: Socket<ClientToServerEvents, ServerToClientEvents, EventsMap, SocketData>,
-  toEveryone: boolean = true,
-) {
+function updateGame(gameId: string) {
   const gameData = games.getGameById(gameId)
 
   if (!gameData) return
 
-  if (toEveryone) {
-    io.to(gameId).emit('updateGameData', gameData)
-  } else {
-    socket.broadcast.emit('updateGameData', gameData)
-  }
+  io.to(gameId).emit('updateGameData', gameData)
 }
 
-async function gameLoop(
-  gameId: string,
-  socket: Socket<ClientToServerEvents, ServerToClientEvents, EventsMap, SocketData>,
-) {
+async function gameLoop(gameId: string) {
   // rkq: change back to API and limit to QUESTIONS_PER_ROUND
   const questions: Question[] = [
     {
@@ -189,14 +176,14 @@ async function gameLoop(
   // })
   for (let i = 0; i < questions.length; i += 1) {
     games.setQuestion(gameId, questions[i])
-    updateGame(gameId, socket)
+    updateGame(gameId)
     await delay()
     games.checkAnswers(gameId)
-    updateGame(gameId, socket)
+    updateGame(gameId)
     await delay()
   }
 
-  console.log('gameLoop ended')
   games.endGame(gameId)
-  updateGame(gameId, socket)
+  updateGame(gameId)
+  games.removeGame(gameId)
 }

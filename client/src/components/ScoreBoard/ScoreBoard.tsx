@@ -4,10 +4,10 @@ import { useGameStoreContext } from '@/store/gameStore'
 
 export default function ScoreBoard() {
   const players = useGameStoreContext(state => state.players)
+  const resetGameStore = useGameStoreContext(state => state.resetGameStore)
 
   function handleGoBack() {
-    // reset game
-    // leave game from the server
+    resetGameStore()
   }
 
   return (
