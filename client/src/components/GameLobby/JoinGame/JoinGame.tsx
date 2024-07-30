@@ -44,7 +44,7 @@ export default function JoinGame({ onGoBack, onSuccess }: Props) {
               onChange={handleInputChange}
               placeholder="Type game code here..."
             />
-            <Button className="!w-40 !h-14" disabled={!userInput} onClick={joinGame}>
+            <Button className="w-40 h-14" disabled={!userInput} onClick={joinGame}>
               Join
             </Button>
           </div>

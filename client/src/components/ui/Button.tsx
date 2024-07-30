@@ -1,3 +1,5 @@
+import { twMerge } from 'tailwind-merge'
+
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode
   colorScheme?: 'primary' | 'secondary'
@@ -13,7 +15,7 @@ export default function Button({ children, colorScheme = 'primary', className, .
   return (
     <button
       // rkq: decide on the styles
-      className={`${baseClasses} ${colorClasses} ${className}`}
+      className={twMerge(`${baseClasses} ${colorClasses} ${className}`)}
       {...props}
     >
       {children}
