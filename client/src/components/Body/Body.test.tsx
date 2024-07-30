@@ -22,9 +22,14 @@ describe('Body', () => {
     expect(screen.getByTestId('game-lobby')).toBeInTheDocument()
   })
 
-  it('should render MainGame when game is not waiting to start', () => {
+  it('should render MainGame when game is in progress', () => {
     renderBody('connected', 'inProgress')
     expect(screen.getByTestId('main-game')).toBeInTheDocument()
+  })
+
+  it('should render Scoreboard when game is finished', () => {
+    renderBody('connected', 'over')
+    expect(screen.getByText(/final scores/)).toBeInTheDocument()
   })
 })
 
