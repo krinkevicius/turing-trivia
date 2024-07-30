@@ -66,4 +66,4 @@ npm run preview
 
 🗹 As a player I can see a timer which allows me to know how much time I have to answer.
 
-☐ As a player I can see final results when game ends.
+🗹 As a player I can see final results when game ends.

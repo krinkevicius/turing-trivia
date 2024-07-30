@@ -77,8 +77,9 @@ io.on('connection', socket => {
   socket.on('leaveGame', gameId => {
     console.log(`server should leaveGame ID ${gameId}`)
     games.leaveGame(gameId, user)
-    updateGame(gameId, socket)
     socket.leave(gameId)
+    updateGame(gameId, socket)
+    console.log(games.getGameById(gameId))
   })
 
   socket.on('joinGame', (gameId, callback) => {
@@ -113,6 +114,7 @@ server.listen(SOCKET_PORT, () => {
   logger.info('Server running at port %d', SOCKET_PORT)
 })
 
+// rkq: toEveryone is not needed at all?
 function updateGame(
   gameId: string,
   socket: Socket<ClientToServerEvents, ServerToClientEvents, EventsMap, SocketData>,

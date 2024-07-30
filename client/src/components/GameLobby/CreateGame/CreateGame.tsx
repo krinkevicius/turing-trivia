@@ -17,7 +17,6 @@ export default function CreateGame({ onGoBack }: Props) {
 
   const cancelGameCreation = () => {
     socket.emit('leaveGame', gameId)
-    // rkq: does not work???
     resetGameStore()
     onGoBack()
   }
