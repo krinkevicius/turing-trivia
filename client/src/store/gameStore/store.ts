@@ -15,7 +15,6 @@ export const createGameStore = (initProps?: Partial<GameProps>) => {
       ...initProps,
       setGameId: gameId => set({ gameId }),
       updateGameData: gameData => {
-        console.log('store got gameData')
         set({
           gameId: gameData.gameId,
           status: gameData.status,

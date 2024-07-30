@@ -8,7 +8,6 @@ export default function useGameEvents() {
 
   useEffect(() => {
     const onUpdateGameData = (gameData: GameData) => {
-      console.log('hook got gameData')
       updateGameData(gameData)
     }
 

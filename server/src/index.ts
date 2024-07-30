@@ -13,8 +13,8 @@ import type {
 } from '@server/types'
 import generateRandomId from '@server/utils/generateRandomId'
 import { initializeGameStore, initializeSessionStore } from '@server/store'
-import getQuestions from '@server/services'
-import { CATEGORIES } from '@server/consts'
+// import getQuestions from '@server/services'
+// import { CATEGORIES } from '@server/consts'
 import { logger } from '@server/logger'
 import delay from '@server/utils/delay'
 // import gameLoop from '@server/gameLoop'
@@ -35,14 +35,10 @@ const sessions = initializeSessionStore()
 const games = initializeGameStore()
 
 io.use((socket, next) => {
-  console.log('middleware...')
-  console.log(socket.handshake.auth)
-
   const { sessionId } = socket.handshake.auth
   const username = socket.handshake.auth.username || `anonymous_${generateRandomId(2)}`
 
   if (sessionId) {
-    console.log('sessionId found')
     const session = sessions.getSessionById(sessionId)
 
     if (!session) {
@@ -75,9 +71,7 @@ io.on('connection', socket => {
     games.createNewGame(gameId, user)
     socket.join(gameId)
     callback(gameId)
-    console.log(socket.rooms)
     updateGame(gameId, socket)
-    console.log(games.getGameById(gameId))
   })
 
   socket.on('leaveGame', gameId => {
@@ -139,19 +133,64 @@ async function gameLoop(
   gameId: string,
   socket: Socket<ClientToServerEvents, ServerToClientEvents, EventsMap, SocketData>,
 ) {
-  // rkq: change limit to QUESTIONS_PER_ROUND
-  const questions: Question[] = await getQuestions({
-    limit: 1,
-    categories: Object.keys(CATEGORIES).join(','),
-  })
+  // rkq: change back to API and limit to QUESTIONS_PER_ROUND
+  const questions: Question[] = [
+    {
+      id: '622a1c367cc59eab6f9503aa',
+      category: 'Entertainment',
+      questionText:
+        'Which eighties album, selling over 20 million copies, featured an appearance by the classic horror actor Vincent Price?',
+      answers: [
+        {
+          id: 'cc66baa9fe6e24ac',
+          answerText: 'Brothers in Arms',
+          isCorrect: false,
+        },
+        { id: '03d64a2e09a82184', answerText: 'Thriller', isCorrect: true },
+        {
+          id: 'ec07abcba4ea43ea',
+          answerText: 'The Joshua Tree',
+          isCorrect: false,
+        },
+        {
+          id: 'de14485242289ee6',
+          answerText: 'Tango in the Night',
+          isCorrect: false,
+        },
+      ],
+      showAnswers: false,
+    },
+    {
+      id: '6244373e746187c5e7be933f',
+      category: 'Science',
+      questionText: 'What is sodium tetraborate decahydrate commonly known as?',
+      answers: [
+        { id: '6591ee2ce055fe40', answerText: 'Bleach', isCorrect: false },
+        { id: '7910439203396efa', answerText: 'Borax', isCorrect: true },
+        {
+          id: 'f0703f5d817d8b7d',
+          answerText: 'Dolomite',
+          isCorrect: false,
+        },
+        {
+          id: 'aee0e0a9cfe769a9',
+          answerText: 'Baking Soda',
+          isCorrect: false,
+        },
+      ],
+      showAnswers: false,
+    },
+  ]
+  // = await getQuestions({
+  //   limit: 2,
+  //   categories: Object.keys(CATEGORIES).join(','),
+  // })
   for (let i = 0; i < questions.length; i += 1) {
-    console.log(questions[i].questionText)
     games.setQuestion(gameId, questions[i])
     updateGame(gameId, socket)
     await delay()
     games.checkAnswers(gameId)
     updateGame(gameId, socket)
-    console.log(new Date())
     await delay()
   }
 

@@ -58,7 +58,7 @@ export default function initializeGameStore(): ServerGameStore {
     if (game.players.length >= MIN_PLAYERS && game.players.every(p => p.status === 'ready')) {
       game.status = 'inProgress'
     }
-    console.log(game)
+    // console.log(game)
     return { status: 'ok' }
   }
 
@@ -67,7 +67,7 @@ export default function initializeGameStore(): ServerGameStore {
     if (!game) return
 
     game.currentQuestion = question
-
+    console.log('setQuestion:')
     console.log('game.currentQuestion', game)
   }
 

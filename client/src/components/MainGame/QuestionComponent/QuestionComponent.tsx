@@ -4,7 +4,7 @@ import Timer from '@/components/ui/Timer'
 import { socket } from '@/libs/socket'
 import { useGameStoreContext } from '@/store/gameStore'
 import type { Question } from '@server/shared'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 type Props = {
   question: Question
@@ -13,6 +13,11 @@ type Props = {
 export default function QuestionComponent({ question }: Props) {
   const gameId = useGameStoreContext(state => state.gameId)
   const [isAnswered, setIsAnswered] = useState<boolean>(question.showAnswers)
+
+  //To synchronize isAnswered with showAnswers
+  useEffect(() => {
+    setIsAnswered(question.showAnswers)
+  }, [question])
 
   function handleAnswer(answerId: string) {
     console.log(
