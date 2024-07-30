@@ -16,6 +16,7 @@ import { initializeGameStore, initializeSessionStore } from '@server/store'
 import getQuestions from '@server/services'
 import { CATEGORIES } from '@server/consts'
 import { logger } from '@server/logger'
+import delay from '@server/utils/delay'
 // import gameLoop from '@server/gameLoop'
 
 const app = express()
@@ -147,12 +148,11 @@ async function gameLoop(
     console.log(questions[i].questionText)
     games.setQuestion(gameId, questions[i])
     updateGame(gameId, socket)
-    await new Promise(resolve => {
-      setTimeout(resolve, 10000)
-    })
+    await delay()
     games.checkAnswers(gameId)
     updateGame(gameId, socket)
     console.log(new Date())
+    await delay()
   }
 
   console.log('gameLoop ended')
