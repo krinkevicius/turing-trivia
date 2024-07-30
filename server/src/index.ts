@@ -160,26 +160,26 @@ async function gameLoop(
       ],
       showAnswers: false,
     },
-    {
-      id: '6244373e746187c5e7be933f',
-      category: 'Science',
-      questionText: 'What is sodium tetraborate decahydrate commonly known as?',
-      answers: [
-        { id: '6591ee2ce055fe40', answerText: 'Bleach', isCorrect: false },
-        { id: '7910439203396efa', answerText: 'Borax', isCorrect: true },
-        {
-          id: 'f0703f5d817d8b7d',
-          answerText: 'Dolomite',
-          isCorrect: false,
-        },
-        {
-          id: 'aee0e0a9cfe769a9',
-          answerText: 'Baking Soda',
-          isCorrect: false,
-        },
-      ],
-      showAnswers: false,
-    },
+    // {
+    //   id: '6244373e746187c5e7be933f',
+    //   category: 'Science',
+    //   questionText: 'What is sodium tetraborate decahydrate commonly known as?',
+    //   answers: [
+    //     { id: '6591ee2ce055fe40', answerText: 'Bleach', isCorrect: false },
+    //     { id: '7910439203396efa', answerText: 'Borax', isCorrect: true },
+    //     {
+    //       id: 'f0703f5d817d8b7d',
+    //       answerText: 'Dolomite',
+    //       isCorrect: false,
+    //     },
+    //     {
+    //       id: 'aee0e0a9cfe769a9',
+    //       answerText: 'Baking Soda',
+    //       isCorrect: false,
+    //     },
+    //   ],
+    //   showAnswers: false,
+    // },
   ]
   // = await getQuestions({
   //   limit: 2,
@@ -195,4 +195,6 @@ async function gameLoop(
   }
 
   console.log('gameLoop ended')
+  games.endGame(gameId)
+  updateGame(gameId, socket)
 }

@@ -29,7 +29,7 @@ describe('Body', () => {
 
   it('should render Scoreboard when game is finished', () => {
     renderBody('connected', 'over')
-    expect(screen.getByText(/final scores/)).toBeInTheDocument()
+    expect(screen.getByText(/final scores/i)).toBeInTheDocument()
   })
 })
 

@@ -6,16 +6,17 @@ import shuffleArray from '@server/utils/shuffleArray'
 
 type ServerGameStore = {
   gameStorage: Map<string, GameData>
-  createNewGame: (gameId: string, user: User) => void
-  getGameById: (gameId: string) => GameData | undefined
-  joinGame: (gameId: string, user: User) => ServerResponse
-  leaveGame: (gameId: string, user: User) => void
-  setPlayerReady: (gameId: string, userId: string) => ServerResponse
-  setQuestion: (gameId: string, question: Question) => void
+  createNewGame: (gameId: GameId, user: User) => void
+  getGameById: (gameId: GameId) => GameData | undefined
+  joinGame: (gameId: GameId, user: User) => ServerResponse
+  leaveGame: (gameId: GameId, user: User) => void
+  setPlayerReady: (gameId: GameId, userId: string) => ServerResponse
+  setQuestion: (gameId: GameId, question: Question) => void
   setPlayerAnswer: (gameId: GameId, userId: string, questionId: string, answerId: string) => void
   checkAnswers: (gameId: GameId) => void
-  isGameReady: (gameId: string) => boolean
-  removeGame: (gameId: string) => void
+  isGameReady: (gameId: GameId) => boolean
+  endGame: (gameId: GameId) => void
+  removeGame: (gameId: GameId) => void
 }
 
 export default function initializeGameStore(): ServerGameStore {
@@ -109,6 +110,13 @@ export default function initializeGameStore(): ServerGameStore {
     }
   }
 
+  function endGame(gameId: string) {
+    const game = gameStorage.get(gameId)
+    if (!game) return
+
+    game.status = 'over'
+    game.currentQuestion = null
+  }
   function removeGame(gameId: string) {
     console.log('removing game', gameId)
     gameStorage.delete(gameId)
@@ -131,6 +139,7 @@ export default function initializeGameStore(): ServerGameStore {
     setQuestion,
     setPlayerAnswer,
     checkAnswers,
+    endGame,
     isGameReady,
     removeGame, // rkq: do I need to return this?
   }
