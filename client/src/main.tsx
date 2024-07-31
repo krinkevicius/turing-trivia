@@ -4,12 +4,15 @@ import App from './App.tsx'
 import './index.css'
 import { UserStoreProvider } from '@/store/userStore'
 import { GameStoreProvider } from '@/store/gameStore'
+import ErrorBoundary from '@/components/ErrorBoundary'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <UserStoreProvider>
       <GameStoreProvider>
-        <App />
+        <ErrorBoundary>
+          <App />
+        </ErrorBoundary>
       </GameStoreProvider>
     </UserStoreProvider>
   </React.StrictMode>,

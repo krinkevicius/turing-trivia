@@ -9,7 +9,7 @@ export const CATEGORIES: Record<string, string> = {
 
 export const QUESTIONS_PER_ROUND = 10
 
-export const API_URL = 'https://the-trivia-api.com/v2/questions'
+export const API_URL = 'https://th-trivia-api.com/v2/questions'
 
 export const PLAYER_COLORS = ['#6224ff', '#24dc62', '#dc3434', '#dc8034']
 

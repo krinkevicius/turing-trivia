@@ -32,6 +32,7 @@ export type ClientToServerEvents = {
 export type ServerToClientEvents = {
   session: (sessionId: SessionId, user: User) => void
   updateGameData: (gameData: GameData) => void
+  serverError: (message: string) => void
   // rkq: delete these
   bears: () => void
   fakeNoArg: () => void
