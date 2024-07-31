@@ -1,7 +1,6 @@
 // rkq: remove rule
 /* eslint-disable no-console */
 import { createServer } from 'node:http'
-import express from 'express'
 import { Server } from 'socket.io'
 import type { EventsMap } from '@socket.io/component-emitter'
 import type {
@@ -16,9 +15,10 @@ import getQuestions from '@server/services'
 import { CATEGORIES } from '@server/consts'
 import { logger } from '@server/logger'
 import delay from '@server/utils/delay'
-// import gameLoop from '@server/gameLoop'
+import createApp from '@server/app'
+import * as Sentry from '@sentry/node'
 
-const app = express()
+const app = createApp()
 const server = createServer(app)
 
 // rkq: move?
@@ -189,6 +189,7 @@ async function gameLoop(gameId: string) {
     games.removeGame(gameId)
   } catch (error) {
     // rkq: change
+    Sentry.captureException(error)
     logger.error('Error getting questions', error)
     io.to(gameId).emit('serverError', 'gameloop error')
   }
