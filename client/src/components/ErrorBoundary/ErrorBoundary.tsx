@@ -1,6 +1,6 @@
 import Fallback from '@/components/ErrorBoundary/Fallback'
-import { ERROR_MAP } from '@/consts'
-import type { ErrorInfo, ReactNode } from 'react'
+// import { ERROR_MAP } from '@/consts'
+import type { /*ErrorInfo,*/ ReactNode } from 'react'
 import { Component } from 'react'
 
 interface Props {
@@ -22,12 +22,12 @@ class ErrorBoundary extends Component<Props, State> {
     return { hasError: true, message: error.message }
   }
 
-  public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    if (!ERROR_MAP[error.message]) {
-      // rkq: change
-      console.error('Report to Sentry', error, errorInfo)
-    }
-  }
+  // public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+  //   if (!ERROR_MAP[error.message]) {
+  //     // rkq: change
+  //     console.error('Report to Sentry', error, errorInfo)
+  //   }
+  // }
 
   public render() {
     if (this.state.hasError) {
