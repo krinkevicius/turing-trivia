@@ -4,6 +4,7 @@ import LoginModal from '@/components/Header/LoginModal'
 import Button from '@/components/ui/Button'
 import { socket } from '@/libs/socket'
 import HeaderLayout from '@/components/ui/HeaderLayout'
+import Login from '@/components/Header/Login'
 
 export default function Header() {
   const user = useUserStoreContext(state => state.user)
@@ -24,7 +25,7 @@ export default function Header() {
     setUsername(event.target.value)
   }
 
-  function handleConnect() {
+  function handleLogin() {
     console.log('connecting to server...')
     socket.auth = { ...socket.auth, username }
     socket.connect()
@@ -64,7 +65,12 @@ export default function Header() {
       <hr className="mb-4 border-t-3 border-borderPrimary" />
       {showModal && (
         <LoginModal open={showModal} onClose={handleModalClose}>
-          <div className="flex flex-col py-4 gap-y-2">
+          <Login
+            username={username}
+            onLogin={handleLogin}
+            onUsernameChange={handleUsernameChange}
+          />
+          {/* <div className="flex flex-col py-4 gap-y-2">
             <input
               className="shadow appearance-none border-borderPrimary border-2 rounded w-full py-2 px-3 text-textSecondary mb-3 bg-bgPrimary focus:outline-none focus:ring-2 focus:ring-borderPrimary focus:ring-opacity-50 focus:shadow-outline"
               type="text"
@@ -75,7 +81,7 @@ export default function Header() {
             <Button disabled={!username} onClick={handleConnect}>
               Login!
             </Button>
-          </div>
+          </div> */}
         </LoginModal>
       )}
     </>
