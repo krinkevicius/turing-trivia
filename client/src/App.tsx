@@ -1,11 +1,10 @@
-import useGameEvents from '@/hooks/useGameEvents'
-import useConnection from '@/hooks/useConnection'
+import useSocket from '@/hooks/useSocket'
+// import useConnection from '@/hooks/useConnection'
 import Header from '@/components/Header'
 import Body from '@/components/Body'
 
 function App() {
-  useConnection()
-  useGameEvents()
+  useSocket()
 
   return (
     <div className="bg-bgPrimary text-textPrimary font-poppins">
