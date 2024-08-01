@@ -1,5 +1,6 @@
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import { useUserStoreContext } from '@/store/userStore'
+import useInputFocus from '@/hooks/useInputFocus'
 import Button from '@/components/ui/Button'
 
 type Props = {
@@ -10,13 +11,7 @@ type Props = {
 
 export default function Login({ username, onUsernameChange, onLogin }: Props) {
   const connectionStatus = useUserStoreContext(state => state.connectionStatus)
-
-  const inputRef = useRef<HTMLInputElement>(null)
-
-  useEffect(() => {
-    if (!inputRef.current) return
-    inputRef.current.focus()
-  }, [])
+  const inputRef = useInputFocus()
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {

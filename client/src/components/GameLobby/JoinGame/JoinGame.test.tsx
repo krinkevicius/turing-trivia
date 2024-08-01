@@ -42,6 +42,12 @@ describe('JoinGame', () => {
     expect(screen.getByRole('button', { name: 'Back' })).toBeInTheDocument()
   })
 
+  it('should focus on input element when component renders', () => {
+    renderJoinGame()
+
+    expect(screen.getByPlaceholderText('Type game code here...')).toHaveFocus()
+  })
+
   it('should disable the button when the input is empty', () => {
     renderJoinGame()
 

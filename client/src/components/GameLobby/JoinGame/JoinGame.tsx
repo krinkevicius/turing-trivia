@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { socket } from '@/libs/socket'
 import Button from '@/components/ui/Button'
 import HeaderLayout from '@/components/ui/HeaderLayout'
+import useInputFocus from '@/hooks/useInputFocus'
 
 type Props = {
   onGoBack: () => void
@@ -11,6 +12,8 @@ type Props = {
 export default function JoinGame({ onGoBack, onSuccess }: Props) {
   const [userInput, setUserInput] = useState<string>('')
   const [joinGameError, setJoinGameError] = useState<string>('')
+
+  const inputRef = useInputFocus()
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserInput(event.target.value)
@@ -39,6 +42,7 @@ export default function JoinGame({ onGoBack, onSuccess }: Props) {
         <div className="flex flex-col">
           <div className="flex flex-row mt-4 gap-2">
             <input
+              ref={inputRef}
               className="h-14 shadow appearance-none border-borderPrimary border-2 rounded w-full py-2 px-3 text-textSecondary mb-3 bg-bgPrimary focus:outline-none focus:ring-2 focus:ring-borderPrimary focus:ring-opacity-50 focus:shadow-outline"
               type="text"
               onChange={handleInputChange}
