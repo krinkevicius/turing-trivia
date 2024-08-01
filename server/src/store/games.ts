@@ -8,6 +8,7 @@ type ServerGameStore = {
   gameStorage: Map<string, GameData>
   createNewGame: (gameId: GameId, user: User) => void
   getGameById: (gameId: GameId) => GameData | undefined
+  getByPlayerId: (userId: string) => GameId | undefined
   joinGame: (gameId: GameId, user: User) => ServerResponse
   leaveGame: (gameId: GameId, user: User) => void
   setPlayerReady: (gameId: GameId, userId: string) => ServerResponse
@@ -35,6 +36,12 @@ export default function initializeGameStore(): ServerGameStore {
 
   function getGameById(gameId: string) {
     return gameStorage.get(gameId)
+  }
+
+  function getByPlayerId(userId: string) {
+    return Array.from(gameStorage.values()).find(game =>
+      game.players.some(player => player.userId === userId),
+    )?.gameId
   }
 
   function joinGame(gameId: string, user: User): ServerResponse {
@@ -133,6 +140,7 @@ export default function initializeGameStore(): ServerGameStore {
     gameStorage, // rkq: do I need to return this?
     createNewGame,
     getGameById,
+    getByPlayerId,
     joinGame,
     leaveGame,
     setPlayerReady,
