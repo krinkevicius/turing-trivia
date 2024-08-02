@@ -1,20 +1,12 @@
 import { createServer } from 'node:http'
 import { Server } from 'socket.io'
 import type { EventsMap } from '@socket.io/component-emitter'
-import type {
-  ClientToServerEvents,
-  Question,
-  ServerToClientEvents,
-  SocketData,
-} from '@server/types'
+import type { ClientToServerEvents, GameId, ServerToClientEvents, SocketData } from '@server/types'
 import generateRandomId from '@server/utils/generateRandomId'
 import { initializeGameStore, initializeSessionStore } from '@server/store'
-import getQuestions from '@server/services'
-import { CATEGORIES, SHOW_ANSERS_MS } from '@server/consts'
 import { logger } from '@server/logger'
-import delay from '@server/utils/delay'
 import createApp from '@server/app'
-import * as Sentry from '@sentry/node'
+import gameloop from '@server/gameloop'
 import { config } from './config'
 
 const app = createApp()
@@ -28,6 +20,18 @@ const io = new Server<ClientToServerEvents, ServerToClientEvents, EventsMap, Soc
 
 const sessions = initializeSessionStore()
 const games = initializeGameStore()
+
+const gameUpdateEmmiter = (gameId: GameId) => {
+  const gameData = games.getGameById(gameId)
+
+  if (!gameData) return
+
+  io.to(gameId).emit('updateGameData', gameData)
+}
+
+const errorEmitter = (gameId: GameId, msg: string) => {
+  io.to(gameId).emit('serverError', msg)
+}
 
 io.use((socket, next) => {
   const { sessionId } = socket.handshake.auth
@@ -63,20 +67,20 @@ io.on('connection', socket => {
     games.createNewGame(gameId, user)
     socket.join(gameId)
     callback(gameId)
-    updateGame(gameId)
+    gameUpdateEmmiter(gameId)
   })
 
   socket.on('leaveGame', gameId => {
     games.leaveGame(gameId, user)
     socket.leave(gameId)
-    updateGame(gameId)
+    gameUpdateEmmiter(gameId)
   })
 
   socket.on('joinGame', (gameId, callback) => {
     const response = games.joinGame(gameId, user)
     if (response.status === 'ok') {
       socket.join(gameId)
-      updateGame(gameId)
+      gameUpdateEmmiter(gameId)
     }
     callback(response)
   })
@@ -84,10 +88,10 @@ io.on('connection', socket => {
   socket.on('playerReady', gameId => {
     games.setPlayerReady(gameId, user.userId)
 
-    updateGame(gameId)
+    gameUpdateEmmiter(gameId)
 
     if (games.isGameReady(gameId)) {
-      gameLoop(gameId)
+      gameloop(gameId, games, gameUpdateEmmiter, errorEmitter)
     }
   })
 
@@ -102,42 +106,10 @@ io.on('connection', socket => {
 
     games.leaveGame(gameId, user)
     socket.leave(gameId)
-    updateGame(gameId)
+    gameUpdateEmmiter(gameId)
   })
 })
+
 server.listen(config.port, () => {
   logger.info('Server running at port %d', config.port)
 })
-
-function updateGame(gameId: string) {
-  const gameData = games.getGameById(gameId)
-
-  if (!gameData) return
-
-  io.to(gameId).emit('updateGameData', gameData)
-}
-
-async function gameLoop(gameId: string) {
-  // rkq: change back limit to QUESTIONS_PER_ROUND
-  try {
-    const questions: Question[] = await getQuestions({
-      limit: 1,
-      categories: Object.keys(CATEGORIES).join(','),
-    })
-    for (let i = 0; i < questions.length; i += 1) {
-      games.setQuestion(gameId, questions[i])
-      updateGame(gameId)
-      await delay()
-      games.checkAnswers(gameId)
-      updateGame(gameId)
-      await delay(SHOW_ANSERS_MS)
-    }
-
-    games.endGame(gameId)
-    updateGame(gameId)
-    games.removeGame(gameId)
-  } catch (error) {
-    Sentry.captureException(error)
-    io.to(gameId).emit('serverError', 'gameloop error')
-  }
-}

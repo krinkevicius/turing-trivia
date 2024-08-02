@@ -1,4 +1,4 @@
-import type { User } from '@server/types'
+import type { ServerResponse, User } from '@server/types'
 
 export type GameId = string
 
@@ -46,4 +46,19 @@ export interface GameData {
   status: 'waitingToStart' | 'inProgress' | 'over'
   players: Player[]
   currentQuestion: Question | null
+}
+
+export type ServerGameStore = {
+  createNewGame: (gameId: GameId, user: User) => void
+  getGameById: (gameId: GameId) => GameData | undefined
+  getByPlayerId: (userId: string) => GameId | undefined
+  joinGame: (gameId: GameId, user: User) => ServerResponse
+  leaveGame: (gameId: GameId, user: User) => void
+  setPlayerReady: (gameId: GameId, userId: string) => ServerResponse
+  setQuestion: (gameId: GameId, question: Question) => void
+  setPlayerAnswer: (gameId: GameId, userId: string, questionId: string, answerId: string) => void
+  checkAnswers: (gameId: GameId) => void
+  isGameReady: (gameId: GameId) => boolean
+  endGame: (gameId: GameId) => void
+  removeGame: (gameId: GameId) => void
 }

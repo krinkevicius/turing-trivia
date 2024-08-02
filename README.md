@@ -74,7 +74,7 @@ npm run preview -w=client
 
 ## Usage
 
-Once in the client visitor needs to login to establish connection to the server by providing their username. After connecting, user can create a game and share game ID with friends, or join already existing room by providing game ID of their own.
+Once in the client, visitor needs to login to establish connection to the server by providing their username. After connecting, user can create a game and share game ID with friends, or join already existing room by providing game ID of their own.
 
 Once 2 to 4 players join and ready up, the game starts. 10 questions will be presented to the players. They get 10 seconds to answer each question, follow by 5 second pause to see how everyone answered.
 

@@ -1,21 +1,13 @@
 import { CORRECT_ANSWER_POINTS, MAX_PLAYERS, MIN_PLAYERS, PLAYER_COLORS } from '@server/consts'
-import type { GameData, User, ServerResponse, Question, GameId } from '@server/types'
+import type {
+  GameData,
+  User,
+  ServerResponse,
+  Question,
+  GameId,
+  ServerGameStore,
+} from '@server/types'
 import shuffleArray from '@server/utils/shuffleArray'
-
-type ServerGameStore = {
-  createNewGame: (gameId: GameId, user: User) => void
-  getGameById: (gameId: GameId) => GameData | undefined
-  getByPlayerId: (userId: string) => GameId | undefined
-  joinGame: (gameId: GameId, user: User) => ServerResponse
-  leaveGame: (gameId: GameId, user: User) => void
-  setPlayerReady: (gameId: GameId, userId: string) => ServerResponse
-  setQuestion: (gameId: GameId, question: Question) => void
-  setPlayerAnswer: (gameId: GameId, userId: string, questionId: string, answerId: string) => void
-  checkAnswers: (gameId: GameId) => void
-  isGameReady: (gameId: GameId) => boolean
-  endGame: (gameId: GameId) => void
-  removeGame: (gameId: GameId) => void
-}
 
 export default function initializeGameStore(): ServerGameStore {
   const gameStorage = new Map<string, GameData>()
