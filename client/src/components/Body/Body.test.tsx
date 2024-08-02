@@ -8,7 +8,7 @@ describe('Body', () => {
   it('should render intro text when user is disconnected', () => {
     renderBody()
     expect(
-      screen.getByText(/This is some random text that should explain what the website is about/),
+      screen.getByText(/Get ready for an exciting journey through the world of trivia/),
     ).toBeInTheDocument()
   })
 

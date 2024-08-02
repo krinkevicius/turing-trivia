@@ -4,7 +4,7 @@ export const CATEGORIES: Record<string, string> = {
   'film_and_tv,music': 'Entertainment',
   science: 'Science',
   arts_and_literature: 'Arts & Literature',
-  sport_and_leisure: 'Sport & Leisure',
+  sport_and_leisure: 'Sports & Leisure',
 }
 
 export const QUESTIONS_PER_ROUND = 10

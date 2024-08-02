@@ -1,5 +1,7 @@
 import type { User } from '@server/types'
 
+export type GameId = string
+
 export interface Player extends User {
   status: 'waiting' | 'ready'
   selectedAnswer: string | null
@@ -40,7 +42,7 @@ export type Question = {
 }
 
 export interface GameData {
-  gameId: string
+  gameId: GameId
   status: 'waitingToStart' | 'inProgress' | 'over'
   players: Player[]
   currentQuestion: Question | null

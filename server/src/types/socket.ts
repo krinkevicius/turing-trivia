@@ -1,7 +1,6 @@
-import type { GameData } from '@server/types'
+import type { GameId, GameData } from '@server/types'
 
 export type SessionId = string
-export type GameId = string
 
 export interface User {
   userId: string
