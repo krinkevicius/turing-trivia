@@ -26,7 +26,12 @@ const SOCKET_PORT = 8181
 
 const io = new Server<ClientToServerEvents, ServerToClientEvents, EventsMap, SocketData>(server, {
   cors: {
-    origin: ['http://localhost:5173', 'http://localhost:4173', 'https://piehost.com'],
+    origin: [
+      'http://localhost:5173',
+      'http://localhost:4173',
+      'https://piehost.com',
+      'https://turing-trivia-client.vercel.app',
+    ],
   },
 })
 

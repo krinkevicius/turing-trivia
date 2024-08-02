@@ -33,19 +33,19 @@ jobs:
       - name: Test server
         run: npm run test -w=server
 
-  build-deploy:
-    needs: test
-    runs-on: ubuntu-22.04
-    if: github.ref == 'refs/heads/main'
-    steps:
-      - uses: actions/checkout@v2
-      - uses: akhileshns/heroku-deploy@v3.13.15 # This is the action
-        with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: 'turing-trivia-be' #Must be unique in Heroku
-          heroku_email: ${{secrets.HEROKU_EMAIL}}
-          appdir: 'server'
-          usedocker: true
-        env:
-          NODE_ENV: production
-          SENTRY_SERVER_DSN: ${{ secrets.SENTRY_SERVER_DSN }}
+  # build-deploy:
+  #   needs: test
+  #   runs-on: ubuntu-22.04
+  #   if: github.ref == 'refs/heads/main'
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: akhileshns/heroku-deploy@v3.13.15 # This is the action
+  #       with:
+  #         heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+  #         heroku_app_name: 'turing-trivia-be' #Must be unique in Heroku
+  #         heroku_email: ${{secrets.HEROKU_EMAIL}}
+  #         appdir: 'server'
+  #         usedocker: true
+  #       env:
+  #         NODE_ENV: production
+  #         SENTRY_SERVER_DSN: ${{ secrets.SENTRY_SERVER_DSN }}
