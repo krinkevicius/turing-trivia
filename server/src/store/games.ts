@@ -1,4 +1,4 @@
-import { MAX_PLAYERS, MIN_PLAYERS, PLAYER_COLORS } from '@server/consts'
+import { CORRECT_ANSWER_POINTS, MAX_PLAYERS, MIN_PLAYERS, PLAYER_COLORS } from '@server/consts'
 import type { GameData, User, ServerResponse, Question, GameId } from '@server/types'
 import shuffleArray from '@server/utils/shuffleArray'
 
@@ -87,7 +87,7 @@ export default function initializeGameStore(): ServerGameStore {
 
     game.players = game.players.map(p => {
       if (p.selectedAnswer === game.currentQuestion?.answers.find(a => a.isCorrect)?.id) {
-        return { ...p, score: p.score + 1 }
+        return { ...p, score: p.score + CORRECT_ANSWER_POINTS }
       }
       return p
     })

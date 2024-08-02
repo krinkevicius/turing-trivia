@@ -8,13 +8,16 @@ const isDevTest = env.NODE_ENV === 'development' || env.NODE_ENV === 'test'
 
 export const schema = z.object({
   env: z.enum(['development', 'production', 'staging', 'test']).default('development'),
-  port: z.number().default(() => {
-    if (isDevTest) {
-      return 8181
-    }
+  port: z
+    .string()
+    .refine(val => parseInt(val, 10))
+    .default(() => {
+      if (isDevTest) {
+        return '8181'
+      }
 
-    throw new Error('You must provide Socket.io port in production environment!')
-  }),
+      throw new Error('You must provide Socket.io port in production environment!')
+    }),
   sentryServerDsn: z.string().default(() => {
     if (isDevTest) {
       return ''
