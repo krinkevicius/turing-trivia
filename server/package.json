@@ -4,8 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "build": "tsc --rootDir src && tsc-alias",
     "dev": "npx tsx watch src/index.ts",
-    "start": "node ./dist/index.js",
+    "start": "node --loader ./loader.js ./dist/index.js",
     "lint": "eslint ./src --ext .js,.jsx,.ts,.tsx --fix",
     "format": "prettier --write .",
     "test": "vitest",
@@ -31,6 +32,7 @@
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^18.0.0",
     "prettier": "^3.3.3",
+    "tsc-alias": "^1.8.10",
     "typescript": "^5.2.2",
     "typescript-eslint": "^7.16.1",
     "vite": "^5.3.4",
