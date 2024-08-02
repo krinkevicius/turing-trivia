@@ -2,11 +2,9 @@ import { io } from 'socket.io-client'
 import type { Socket } from 'socket.io-client'
 import type { ClientToServerEvents, ServerToClientEvents } from '@server/shared'
 import { USER_STORAGE_KEY } from '@/consts'
+import { socketOrigin, socketPort } from '@/config'
 
-// rkq: move or create env file
-const SOCKET_PORT = 8181
-const URL = `http://localhost:${SOCKET_PORT}`
-// const URL = `https://turing-trivia-server.vercel.app:${SOCKET_PORT}`
+const URL = `${socketOrigin}:${socketPort}`
 
 function getSessionID() {
   const userStorage = localStorage.getItem(USER_STORAGE_KEY)

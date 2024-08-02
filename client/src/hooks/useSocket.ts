@@ -20,14 +20,12 @@ export default function useSocket() {
     }
 
     const onConnect = () => {
-      console.log('Connected to server')
       setConnectionStatus('connected')
     }
 
-    const onConnectError = (/* error: Error */) => {
+    const onConnectError = () => {
       setConnectionStatus('disconnected')
       localStorage.removeItem(USER_STORAGE_KEY)
-      // alert(error)
       setError(new Error('connection error'))
     }
 

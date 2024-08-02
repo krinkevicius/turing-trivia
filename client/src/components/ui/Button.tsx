@@ -13,11 +13,7 @@ export default function Button({ children, colorScheme = 'primary', className, .
       ? 'bg-primaryBtnColor hover:bg-primaryBtnHover focus:ring-primaryBtnColor disabled:bg-primaryBtnColor'
       : 'bg-secondaryBtnColor hover:bg-secondaryBtnHover focus:ring-secondaryBtnColor disabled:bg-secondaryBtnColor'
   return (
-    <button
-      // rkq: decide on the styles
-      className={twMerge(`${baseClasses} ${colorClasses} ${className}`)}
-      {...props}
-    >
+    <button className={twMerge(`${baseClasses} ${colorClasses} ${className}`)} {...props}>
       {children}
     </button>
   )

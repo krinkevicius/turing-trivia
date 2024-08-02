@@ -12,9 +12,6 @@ const INVALID_ROOM_ID = 'invalid-room-id'
 vi.mock('@/libs/socket', () => {
   return {
     socket: {
-      emit: vitest.fn((_, roomId) => {
-        console.log(roomId)
-      }),
       emitWithAck: vitest.fn((_, roomId: string) => {
         const response: ServerResponse =
           roomId === VALID_ROOM_ID ? { status: 'ok' } : { status: 'error' }

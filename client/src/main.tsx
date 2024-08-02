@@ -18,8 +18,7 @@ Sentry.init({
   // Performance Monitoring
   tracesSampleRate: 1.0, //  Capture 100% of the transactions
   // Set 'tracePropagationTargets' to control for which URLs distributed tracing should be enabled
-  // rkq: change
-  tracePropagationTargets: ['localhost', /^https:\/\/yourserver\.io\/api/],
+  tracePropagationTargets: ['localhost'],
   // Profiling
   profilesSampleRate: 1.0, // Profile 100% of the transactions. This value is relative to tracesSampleRate
   // Session Replay

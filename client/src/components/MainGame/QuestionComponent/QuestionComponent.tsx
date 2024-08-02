@@ -20,9 +20,6 @@ export default function QuestionComponent({ question }: Props) {
   }, [question])
 
   function handleAnswer(answerId: string) {
-    console.log(
-      `selected answer is: ${question.answers.find(answer => answer.id === answerId)?.answerText}`,
-    )
     socket.emit('answer', gameId, question.id, answerId)
     setIsAnswered(true)
   }

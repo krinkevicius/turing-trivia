@@ -12,7 +12,6 @@ export default function LobbyPlayerCard({ player }: Props) {
   const user = useUserStoreContext(state => state.user)
   const gameId = useGameStoreContext(state => state.gameId)
   function handleReady() {
-    // rkq: send socket request to set player status to ready
     socket.emit('playerReady', gameId)
   }
 

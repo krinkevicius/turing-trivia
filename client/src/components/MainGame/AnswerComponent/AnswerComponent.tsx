@@ -25,7 +25,6 @@ export default function AnswerComponent({ answer, disabled, showAnswers, onAnswe
 
   return (
     <div className="flex flex-row w-full h-full">
-      {/* rkq: min width? */}
       <div className="show-players w-3.5">
         {showAnswers && (
           <div className="flex flex-col gap-2">
@@ -55,7 +54,6 @@ export default function AnswerComponent({ answer, disabled, showAnswers, onAnswe
       >
         {answer.answerText}
       </button>
-      {/* rkq: another div to keep btn in place? */}
       <div className="w-3.5"></div>
     </div>
   )

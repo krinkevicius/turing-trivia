@@ -15,7 +15,6 @@ export default function LoginModal({ open, onClose, children }: Props) {
         className={`bg-bgPrimary border-borderPrimary border-2 rounded-xl shadow p-6 transition-all ${open ? 'scale-100 opacity-100' : 'scale-125 opacity-0'}`}
         onClick={event => event.stopPropagation()}
       >
-        {/* rkq: add styles! */}
         <button
           className="absolute top-1 right-2 p1 rounded-lg text-textSecondary hover:text-textPrimary"
           title="Close"

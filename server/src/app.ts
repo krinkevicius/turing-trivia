@@ -16,7 +16,7 @@ export default function createApp() {
     profilesSampleRate: 1.0,
   })
 
-  Sentry.setupExpressErrorHandler(app) // rkq: is this needed?
+  Sentry.setupExpressErrorHandler(app)
 
   return app
 }

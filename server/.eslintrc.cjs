@@ -2,12 +2,7 @@
 
 module.exports = {
   root: true,
-  extends: [
-    'eslint:recommended',
-    'airbnb', // or any other config you want to extend
-    'airbnb-typescript/base',
-    'prettier',
-  ],
+  extends: ['eslint:recommended', 'airbnb', 'airbnb-typescript/base', 'prettier'],
   parserOptions: {
     ecmaVersion: 'latest',
     project: './tsconfig.eslint.json',

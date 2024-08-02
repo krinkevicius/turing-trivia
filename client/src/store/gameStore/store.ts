@@ -22,8 +22,6 @@ export const createGameStore = (initProps?: Partial<GameProps>) => {
           currentQuestion: gameData.currentQuestion,
         })
       },
-      // rkq: Is this needed?
-      resetGameId: () => set({ gameId: '' }),
       resetGameStore: () => set(DEFAULT_PROPS),
     })),
   )

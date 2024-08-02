@@ -1,11 +1,8 @@
-// rkq: remove rule
-/* eslint-disable no-console */
 import { MAX_PLAYERS, MIN_PLAYERS, PLAYER_COLORS } from '@server/consts'
 import type { GameData, User, ServerResponse, Question, GameId } from '@server/types'
 import shuffleArray from '@server/utils/shuffleArray'
 
 type ServerGameStore = {
-  gameStorage: Map<string, GameData>
   createNewGame: (gameId: GameId, user: User) => void
   getGameById: (gameId: GameId) => GameData | undefined
   getByPlayerId: (userId: string) => GameId | undefined
@@ -30,7 +27,6 @@ export default function initializeGameStore(): ServerGameStore {
       players: [],
       currentQuestion: null,
     })
-    // rkq: do I need to return this? Then check based on status
     joinGame(gameId, user)
   }
 
@@ -66,7 +62,6 @@ export default function initializeGameStore(): ServerGameStore {
     if (game.players.length >= MIN_PLAYERS && game.players.every(p => p.status === 'ready')) {
       game.status = 'inProgress'
     }
-    // console.log(game)
     return { status: 'ok' }
   }
 
@@ -75,8 +70,6 @@ export default function initializeGameStore(): ServerGameStore {
     if (!game) return
 
     game.currentQuestion = question
-    console.log('setQuestion:')
-    console.log('game.currentQuestion', game)
   }
 
   function setPlayerAnswer(gameId: GameId, userId: string, questionId: string, answerId: string) {
@@ -86,7 +79,6 @@ export default function initializeGameStore(): ServerGameStore {
     game.players = game.players.map(p =>
       p.userId === userId ? { ...p, selectedAnswer: answerId } : p,
     )
-    console.log('player answered', game.players)
   }
 
   function checkAnswers(gameId: GameId) {
@@ -100,7 +92,6 @@ export default function initializeGameStore(): ServerGameStore {
       return p
     })
     game.currentQuestion.showAnswers = true
-    console.log('game.players', game.players)
   }
 
   function leaveGame(gameId: string, user: User) {
@@ -111,7 +102,6 @@ export default function initializeGameStore(): ServerGameStore {
     if (playerIndex === -1) return
 
     game.players.splice(playerIndex, 1)
-    console.log('game.players', game.players)
     if (game.players.length === 0) {
       removeGame(gameId)
     }
@@ -125,9 +115,7 @@ export default function initializeGameStore(): ServerGameStore {
     game.currentQuestion = null
   }
   function removeGame(gameId: string) {
-    console.log('removing game', gameId)
     gameStorage.delete(gameId)
-    console.log('gameStorage', gameStorage)
   }
 
   function isGameReady(gameId: string) {
@@ -137,7 +125,6 @@ export default function initializeGameStore(): ServerGameStore {
   }
 
   return {
-    gameStorage, // rkq: do I need to return this?
     createNewGame,
     getGameById,
     getByPlayerId,
@@ -149,6 +136,6 @@ export default function initializeGameStore(): ServerGameStore {
     checkAnswers,
     endGame,
     isGameReady,
-    removeGame, // rkq: do I need to return this?
+    removeGame,
   }
 }

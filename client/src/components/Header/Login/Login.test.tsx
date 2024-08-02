@@ -38,7 +38,6 @@ describe('Login', () => {
 
   it('should call prop function propOnLoginFn when Enter button is pressed', async () => {
     renderLogin('john.doe')
-    // const usernameInput = screen.getByPlaceholderText('Type your username')
     const user = userEvent.setup()
 
     await user.keyboard('{Enter}')

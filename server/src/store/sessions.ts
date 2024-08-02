@@ -12,7 +12,6 @@ export default function initializeSessionStore() {
   }
 
   return {
-    sessionStorage, // rkq: do I need to return this?
     getSessionById,
     setSession,
   }

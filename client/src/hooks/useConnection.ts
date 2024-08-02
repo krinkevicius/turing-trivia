@@ -9,7 +9,6 @@ export default function useConnection() {
 
   useEffect(() => {
     const onConnect = () => {
-      console.log('Connected to server')
       setConnectionStatus('connected')
     }
 

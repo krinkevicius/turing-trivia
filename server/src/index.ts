@@ -1,5 +1,3 @@
-// rkq: remove rule
-/* eslint-disable no-console */
 import { createServer } from 'node:http'
 import { Server } from 'socket.io'
 import type { EventsMap } from '@socket.io/component-emitter'
@@ -11,27 +9,20 @@ import type {
 } from '@server/types'
 import generateRandomId from '@server/utils/generateRandomId'
 import { initializeGameStore, initializeSessionStore } from '@server/store'
-// import getQuestions from '@server/services'
-// import { CATEGORIES } from '@server/consts'
+import getQuestions from '@server/services'
+import { CATEGORIES, SHOW_ANSERS_MS } from '@server/consts'
 import { logger } from '@server/logger'
 import delay from '@server/utils/delay'
 import createApp from '@server/app'
 import * as Sentry from '@sentry/node'
+import { config } from './config'
 
 const app = createApp()
 const server = createServer(app)
 
-// rkq: move?
-const SOCKET_PORT = 8181
-
 const io = new Server<ClientToServerEvents, ServerToClientEvents, EventsMap, SocketData>(server, {
   cors: {
-    origin: [
-      'http://localhost:5173',
-      'http://localhost:4173',
-      'https://piehost.com',
-      'https://turing-trivia-client.vercel.app',
-    ],
+    origin: ['http://localhost:5173', 'http://localhost:4173'],
   },
 })
 
@@ -63,14 +54,11 @@ io.use((socket, next) => {
 })
 
 io.on('connection', socket => {
-  console.log('a user connected')
-
   const user = sessions.getSessionById(socket.data.sessionId)! // session will exist, as checked in middleware
 
   socket.emit('session', socket.data.sessionId, user)
 
   socket.on('createGame', callback => {
-    console.log('server should createGame')
     const gameId = generateRandomId()
     games.createNewGame(gameId, user)
     socket.join(gameId)
@@ -79,11 +67,9 @@ io.on('connection', socket => {
   })
 
   socket.on('leaveGame', gameId => {
-    console.log(`server should leaveGame ID ${gameId}`)
     games.leaveGame(gameId, user)
     socket.leave(gameId)
     updateGame(gameId)
-    console.log(games.getGameById(gameId))
   })
 
   socket.on('joinGame', (gameId, callback) => {
@@ -96,7 +82,6 @@ io.on('connection', socket => {
   })
 
   socket.on('playerReady', gameId => {
-    console.log(`player ${user.userId} is ready to play ${gameId}`)
     games.setPlayerReady(gameId, user.userId)
 
     updateGame(gameId)
@@ -111,7 +96,6 @@ io.on('connection', socket => {
   })
 
   socket.on('disconnect', () => {
-    console.log('user disconnected')
     const gameId = games.getByPlayerId(user.userId)
 
     if (!gameId) return
@@ -119,11 +103,10 @@ io.on('connection', socket => {
     games.leaveGame(gameId, user)
     socket.leave(gameId)
     updateGame(gameId)
-    console.log(`user ${user.userId} disconnected from game ${gameId}`)
   })
 })
-server.listen(SOCKET_PORT, () => {
-  logger.info('Server running at port %d', SOCKET_PORT)
+server.listen(config.port, () => {
+  logger.info('Server running at port %d', config.port)
 })
 
 function updateGame(gameId: string) {
@@ -135,76 +118,26 @@ function updateGame(gameId: string) {
 }
 
 async function gameLoop(gameId: string) {
-  // rkq: change back to API and limit to QUESTIONS_PER_ROUND
+  // rkq: change back limit to QUESTIONS_PER_ROUND
   try {
-    const questions: Question[] = [
-      {
-        id: '622a1c367cc59eab6f9503aa',
-        category: 'Entertainment',
-        questionText:
-          'Which eighties album, selling over 20 million copies, featured an appearance by the classic horror actor Vincent Price?',
-        answers: [
-          {
-            id: 'cc66baa9fe6e24ac',
-            answerText: 'Brothers in Arms',
-            isCorrect: false,
-          },
-          { id: '03d64a2e09a82184', answerText: 'Thriller', isCorrect: true },
-          {
-            id: 'ec07abcba4ea43ea',
-            answerText: 'The Joshua Tree',
-            isCorrect: false,
-          },
-          {
-            id: 'de14485242289ee6',
-            answerText: 'Tango in the Night',
-            isCorrect: false,
-          },
-        ],
-        showAnswers: false,
-      },
-      {
-        id: '6244373e746187c5e7be933f',
-        category: 'Science',
-        questionText: 'What is sodium tetraborate decahydrate commonly known as?',
-        answers: [
-          { id: '6591ee2ce055fe40', answerText: 'Bleach', isCorrect: false },
-          { id: '7910439203396efa', answerText: 'Borax', isCorrect: true },
-          {
-            id: 'f0703f5d817d8b7d',
-            answerText: 'Dolomite',
-            isCorrect: false,
-          },
-          {
-            id: 'aee0e0a9cfe769a9',
-            answerText: 'Baking Soda',
-            isCorrect: false,
-          },
-        ],
-        showAnswers: false,
-      },
-    ]
-
-    // const questions: Question[] = await getQuestions({
-    //   limit: 1,
-    //   categories: Object.keys(CATEGORIES).join(','),
-    // })
+    const questions: Question[] = await getQuestions({
+      limit: 1,
+      categories: Object.keys(CATEGORIES).join(','),
+    })
     for (let i = 0; i < questions.length; i += 1) {
       games.setQuestion(gameId, questions[i])
       updateGame(gameId)
       await delay()
       games.checkAnswers(gameId)
       updateGame(gameId)
-      await delay()
+      await delay(SHOW_ANSERS_MS)
     }
 
     games.endGame(gameId)
     updateGame(gameId)
     games.removeGame(gameId)
   } catch (error) {
-    // rkq: change
     Sentry.captureException(error)
-    logger.error('Error getting questions', error)
     io.to(gameId).emit('serverError', 'gameloop error')
   }
 }

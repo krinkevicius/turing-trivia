@@ -18,8 +18,6 @@ export default function GameLobby() {
     setLobbyAction('create')
     const response = await socket.emitWithAck('createGame')
     if (!gameId) {
-      // rkq: remove
-      console.log('game lobby is updating gameId')
       setGameId(response)
     }
   }
