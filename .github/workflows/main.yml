@@ -121,7 +121,7 @@ jobs:
               },
               "environment": {
                 "NODE_ENV": "production",
-                SOCKET_PORT: 8181,
+                "SOCKET_PORT": "8181",
                 "SENTRY_SERVER_DSN": "${{secrets.SENTRY_SERVER_DSN}}",
               }
             }
