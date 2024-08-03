@@ -16,6 +16,10 @@ export default function createApp() {
     profilesSampleRate: 1.0,
   })
 
+  app.get('/', (_, res) => {
+    res.send('Hello World!')
+  })
+
   Sentry.setupExpressErrorHandler(app)
 
   return app
