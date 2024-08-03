@@ -17,5 +17,3 @@ coverage
 data/database*
 !/src/modules
 .env
-
-Dockerfile

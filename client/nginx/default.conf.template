@@ -1,0 +1,30 @@
+server {
+  # Listen on port 80
+  # The actual exposed port will be routed in the docker-compose.yml or
+  # our deployment configuration.
+  listen 80;
+  listen [::]:80;
+
+  # Allow file uploads up to 20 MB
+  # Larger files will be rejected.
+  client_max_body_size 20M;
+
+  # Allow gzip compression
+  gzip on;
+
+  # Do not show nginx version
+  server_tokens off;
+
+  # All /api requests are forwarded to the Node.js server
+  location /api {
+    proxy_pass $API_PROXY_PASS;
+  }
+
+  # For everything else, try to serve static files from root /usr/share/nginx/html
+  # If a file with a given path does not exist, serve index.html in the root folder.
+  location / {
+    root /usr/share/nginx/html;
+    index index.html;
+    try_files $uri $uri/ /index.html;
+  }
+}

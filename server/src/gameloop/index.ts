@@ -31,6 +31,5 @@ export default async function gameloop(
   } catch (error) {
     Sentry.captureException(error)
     errorEmitter(gameId, 'gameloop error')
-    // io.to(gameId).emit('serverError', 'gameloop error')
   }
 }
