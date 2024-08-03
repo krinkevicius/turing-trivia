@@ -131,7 +131,7 @@ jobs:
         run: |
           echo '{
             "containerName": "client",
-            "containerPort": 80,
+            "containerPort": 80
           }' > public-endpoint.json
 
       - name: Deploy to AWS Lightsail
