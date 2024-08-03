@@ -14,7 +14,7 @@ export default function Body() {
   if (connectionStatus === 'connected') return <GameLobby />
   if (connectionStatus === 'connecting') return <LoadingLobby />
   return (
-    <div className="flex flex-col container mx-auto px-8 gap-4">
+    <div className="flex flex-col container mx-auto px-8 gap-4 text-xs md:text-base">
       <div className="text-xl font-bold text-center">Welcome to the Ultimate Trivia Challenge!</div>
       <p>
         Get ready for an exciting journey through the world of trivia! Whether you're a history
