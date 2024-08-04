@@ -4,7 +4,7 @@ import type { EventsMap } from '@socket.io/component-emitter'
 import type { ClientToServerEvents, GameId, ServerToClientEvents, SocketData } from '@server/types'
 import generateRandomId from '@server/utils/generateRandomId'
 import { initializeGameStore, initializeSessionStore } from '@server/store'
-import { logger } from '@server/logger'
+import { devLogger, prodLogger } from '@server/logger'
 import createApp from '@server/app'
 import gameloop from '@server/gameloop'
 import { config } from './config'
@@ -14,12 +14,7 @@ const server = createServer(app)
 
 const io = new Server<ClientToServerEvents, ServerToClientEvents, EventsMap, SocketData>(server, {
   cors: {
-    origin: [
-      'http://localhost:5173',
-      'http://localhost:4173',
-      'https://turing-trivia.cv41bfvka52ra.eu-central-1.cs.amazonlightsail.com',
-      'https://turing-trivia.cv41bfvka52ra.eu-central-1.cs.amazonlightsail.com:80',
-    ],
+    origin: ['http://localhost:5173', 'http://localhost:4173'],
   },
 })
 
@@ -66,6 +61,7 @@ io.on('connection', socket => {
   const user = sessions.getSessionById(socket.data.sessionId)! // session will exist, as checked in middleware
 
   socket.emit('session', socket.data.sessionId, user)
+  prodLogger.info(`user ${user.userId} has connected.`)
 
   socket.on('createGame', callback => {
     const gameId = generateRandomId()
@@ -105,6 +101,7 @@ io.on('connection', socket => {
   })
 
   socket.on('disconnect', () => {
+    prodLogger.info(`user ${user.userId} has disconnected.`)
     const gameId = games.getByPlayerId(user.userId)
 
     if (!gameId) return
@@ -116,5 +113,5 @@ io.on('connection', socket => {
 })
 
 server.listen(config.port, () => {
-  logger.info('Server running at port %d', config.port)
+  devLogger.info('Server running at port %d', config.port)
 })

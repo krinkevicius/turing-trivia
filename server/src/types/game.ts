@@ -12,6 +12,7 @@ export interface Player extends User {
 export type APIParams = {
   limit: number
   categories: string
+  difficulties: string
 }
 
 export type APIQuestion = {

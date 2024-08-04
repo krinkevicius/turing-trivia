@@ -7,6 +7,7 @@ describe('getQuestions', () => {
     const requestParams = {
       categories: 'test-category-1,test-category-2',
       limit: 1,
+      difficulties: 'easy',
     }
 
     const getSpy = vi.spyOn(axios, 'get')
