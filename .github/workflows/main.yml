@@ -40,6 +40,7 @@ jobs:
     env:
       SOCKET_ORIGIN: ${{ vars.SOCKET_ORIGIN }}
       SOCKET_PORT: 3000
+      ENVIRONMENT: production
       SENTRY_CLIENT_DSN: ${{ secrets.SENTRY_CLIENT_DSN }}
       CLIENT_IMAGE_TAG: client-${{ github.sha }}
       SERVER_IMAGE_TAG: server-${{ github.sha }}
@@ -77,6 +78,7 @@ jobs:
           --build-arg VITE_SOCKET_ORIGIN=$SOCKET_ORIGIN
           --build-arg VITE_SOCKET_PORT=$SOCKET_PORT
           --build-arg VITE_SENTRY_CLIENT_DSN=$SENTRY_CLIENT_DSN
+          --build-arg VITE_ENVIRONMENT=$ENVIRONMENT
           -f ./client/Dockerfile .
 
       - name: Push server image
@@ -120,8 +122,8 @@ jobs:
                 "3000": "HTTP"
               },
               "environment": {
-                "NODE_ENV": "production",
-                "SOCKET_PORT": "3000",
+                "NODE_ENV": $ENVIRONMENT,
+                "SOCKET_PORT": $SOCKET_PORT,
                 "SENTRY_SERVER_DSN": "${{secrets.SENTRY_SERVER_DSN}}"
               }
             }
