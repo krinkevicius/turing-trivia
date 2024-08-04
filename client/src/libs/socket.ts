@@ -4,7 +4,7 @@ import type { ClientToServerEvents, ServerToClientEvents } from '@server/shared'
 import { USER_STORAGE_KEY } from '@/consts'
 import { socketOrigin, socketPort } from '@/config'
 
-const URL = `${socketOrigin}:${socketPort}`
+const URL = socketPort ? `${socketOrigin}:${socketPort}` : socketOrigin
 
 function getSessionID() {
   const userStorage = localStorage.getItem(USER_STORAGE_KEY)

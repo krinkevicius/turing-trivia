@@ -40,7 +40,7 @@ A simple multiplayer trivia game for 2-4 players.
 npm install
 ```
 
-4. Setup `.env` files in `server` and `client` based on respective `.env.example` files. This shouldn't be necessary if you only want to view project in dev.
+4. Setup `.env` files in `server` and `client` based on respective `.env.example` files.
 
 5. Run the server
 
