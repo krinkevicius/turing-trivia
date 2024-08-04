@@ -18,6 +18,7 @@ const io = new Server<ClientToServerEvents, ServerToClientEvents, EventsMap, Soc
       'http://localhost:5173',
       'http://localhost:4173',
       'https://turing-trivia.cv41bfvka52ra.eu-central-1.cs.amazonlightsail.com',
+      'https://turing-trivia.cv41bfvka52ra.eu-central-1.cs.amazonlightsail.com:80',
     ],
   },
 })
