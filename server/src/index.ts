@@ -14,7 +14,11 @@ const server = createServer(app)
 
 const io = new Server<ClientToServerEvents, ServerToClientEvents, EventsMap, SocketData>(server, {
   cors: {
-    origin: ['http://localhost:5173', 'http://localhost:4173'],
+    origin: [
+      'http://localhost:5173',
+      'http://localhost:4173',
+      'https://turing-trivia.cv41bfvka52ra.eu-central-1.cs.amazonlightsail.com',
+    ],
   },
 })
 
