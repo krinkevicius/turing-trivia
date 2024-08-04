@@ -39,7 +39,7 @@ jobs:
     if: github.ref == 'refs/heads/main'
     env:
       SOCKET_ORIGIN: ${{ vars.SOCKET_ORIGIN }}
-      SOCKET_PORT: 8181
+      SOCKET_PORT: 3000
       SENTRY_CLIENT_DSN: ${{ secrets.SENTRY_CLIENT_DSN }}
       CLIENT_IMAGE_TAG: client-${{ github.sha }}
       SERVER_IMAGE_TAG: server-${{ github.sha }}
@@ -111,17 +111,17 @@ jobs:
                 "80": "HTTP"
               },
               "environment": {
-                "API_PROXY_PASS": "http://localhost:8181"
+                "API_PROXY_PASS": "http://localhost:3000"
               }
             },
             "server": {
               "image": "${{ env.LIGHTSAIL_SERVER_IMAGE }}",
               "ports": {
-                "8181": "HTTP"
+                "3000": "HTTP"
               },
               "environment": {
                 "NODE_ENV": "production",
-                "SOCKET_PORT": "8181",
+                "SOCKET_PORT": "3000",
                 "SENTRY_SERVER_DSN": "${{secrets.SENTRY_SERVER_DSN}}"
               }
             }
@@ -131,7 +131,11 @@ jobs:
         run: |
           echo '{
             "containerName": "client",
-            "containerPort": 80
+            "containerPort": 80,
+            "healthCheck": {
+              "intervalSeconds": 10,
+              "path": "/api/health"
+            }
           }' > public-endpoint.json
 
       - name: Deploy to AWS Lightsail

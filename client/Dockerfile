@@ -1,4 +1,4 @@
-FROM node:20.11.1-alpine3.19 AS builder
+FROM node:20.14.0-alpine3.20 AS builder
 
 WORKDIR /app
 
@@ -14,15 +14,19 @@ ARG VITE_SOCKET_PORT
 ARG VITE_SENTRY_CLIENT_DSN
 
 WORKDIR /app/client
+
 RUN npm run build
 
-FROM nginx:1.25.3-alpine3.18
+FROM nginx:1.27.0-alpine3.19 as nginx
 
 RUN rm /usr/share/nginx/html/* -rf
+
+COPY --from=builder /app/client/dist /usr/share/nginx/html
+
+ENV NGINX_ENVSUBST_OUTPUT_DIR '/etc/nginx/conf.d'
 
 COPY client/nginx/default.conf.template /etc/nginx/templates/default.conf.template
 
 EXPOSE 80
 
-# Start Nginx.
 CMD ["nginx", "-g", "daemon off;"]

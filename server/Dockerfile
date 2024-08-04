@@ -1,4 +1,4 @@
-FROM node:20.11.1-alpine3.19 AS builder
+FROM node:20.14.0-alpine3.20 AS builder
 
 WORKDIR /app
 
@@ -12,6 +12,6 @@ COPY server/ server/
 WORKDIR /app/server
 RUN npm run build
 
-EXPOSE 8181
+EXPOSE 3000
 
 CMD ["npm", "run", "start"]

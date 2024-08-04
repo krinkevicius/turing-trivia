@@ -16,8 +16,9 @@ export default function createApp() {
     profilesSampleRate: 1.0,
   })
 
-  app.get('/', (_, res) => {
-    res.send('Hello World!')
+  // Endpoint for health checks - pinging the server to see if it's alive.
+  app.use('/api/health', (_, res) => {
+    res.status(200).send('OK')
   })
 
   Sentry.setupExpressErrorHandler(app)

@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  server:
+    build:
+      context: .
+      dockerfile: ./server/Dockerfile
+    env_file:
+      - ./server/.env
+    environment:
+      PORT: 3000
+    ports:
+      - '3000:3000'
+
+  client:
+    build:
+      context: .
+      dockerfile: ./client/Dockerfile
+      args:
+        VITE_SOCKET_ORIGIN: http://localhost
+        VITE_SOCKET_PORT: 3000
+    environment:
+      API_PROXY_PASS: http://server:3000
+    ports:
+      - '4173:80'
+    depends_on:
+      - server
