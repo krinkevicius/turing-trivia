@@ -122,8 +122,8 @@ jobs:
                 "3000": "HTTP"
               },
               "environment": {
-                "NODE_ENV": $ENVIRONMENT,
-                "SOCKET_PORT": $SOCKET_PORT,
+                "NODE_ENV": "production",
+                "SOCKET_PORT": "3000",
                 "SENTRY_SERVER_DSN": "${{secrets.SENTRY_SERVER_DSN}}"
               }
             }
