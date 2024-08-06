@@ -11,8 +11,6 @@ A simple multiplayer trivia game for 2-4 players.
 - [Socket.IO](https://socket.io/) for communication between server and client;
 - [Vitest](https://vitest.dev/) for testing.
 
-<b>Note!</b> This project was was used as an implementation of Turing College Web Development project for Module 4 Sprint 4.
-
 ## Table of Contents
 
 - [Setup](#setup)
