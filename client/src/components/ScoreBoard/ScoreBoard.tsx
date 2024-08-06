@@ -11,17 +11,17 @@ export default function ScoreBoard() {
   }
 
   return (
-    <div className="flex flex-col justify-between h-full">
+    <div className="flex h-full flex-col justify-between">
       <div>
         <HeaderLayout>Final scores</HeaderLayout>
-        <div className="flex flex-col gap-2 items-center mt-4">
+        <div className="mt-4 flex flex-col items-center gap-2">
           {players
             .sort((a, b) => b.score - a.score)
             .map(player => (
               <div
                 key={player.userId}
                 data-testid="player-score-card"
-                className="flex flex-row justify-between items-center h-20 w-3/4 rounded border-2 py-2 px-4 text-lg bg-bgTetrary"
+                className="flex h-20 w-3/4 flex-row items-center justify-between rounded border-2 bg-bgTetrary px-4 py-2 text-lg"
                 style={{
                   borderColor: player.color,
                 }}

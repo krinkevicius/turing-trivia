@@ -10,7 +10,7 @@ export default function GamePlayerCard({ player }: Props) {
 
   return (
     <div
-      className={`${user?.userId === player.userId ? 'flex' : 'hidden'} flex-row justify-between items-center h-20 w-full rounded border-2 py-2 px-4 text-lg bg-bgTetrary xl:flex xl:w-1/4`}
+      className={`${user?.userId === player.userId ? 'flex' : 'hidden'} h-20 w-full flex-row items-center justify-between rounded border-2 bg-bgTetrary px-4 py-2 text-lg xl:flex xl:w-1/4`}
       style={{
         borderColor: player.color,
       }}

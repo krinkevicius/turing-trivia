@@ -2,7 +2,7 @@ import OptionLayout from '@/components/ui/OptionLayout'
 
 export default function LoadingLobby() {
   const loadingDiv: React.ReactNode = (
-    <div className="animate-pulse bg-textSecondary h-full w-full rounded"></div>
+    <div className="h-full w-full animate-pulse rounded bg-textSecondary"></div>
   )
 
   return (

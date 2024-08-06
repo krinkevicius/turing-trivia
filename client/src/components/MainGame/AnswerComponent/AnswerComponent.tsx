@@ -24,7 +24,7 @@ export default function AnswerComponent({ answer, disabled, showAnswers, onAnswe
   const colorClasses = answerColorStyles[backgroundColor]
 
   return (
-    <div className="flex flex-row w-full h-full">
+    <div className="flex h-full w-full flex-row">
       <div className="show-players w-3.5">
         {showAnswers && (
           <div className="flex flex-col gap-2">
@@ -35,7 +35,7 @@ export default function AnswerComponent({ answer, disabled, showAnswers, onAnswe
                     key={player.userId}
                     data-testid="player-choice"
                     // src: https://css-tricks.com/the-shapes-of-css/#aa-cone-shape-via-omid-rasouli
-                    className="w-0 h-0 rotate-[270deg] rounded-[50%] border-t-[10px] border-x-[7px] border-x-transparent border-solid"
+                    className="h-0 w-0 rotate-[270deg] rounded-[50%] border-x-[7px] border-t-[10px] border-solid border-x-transparent"
                     style={{
                       borderTopColor: player.color,
                     }}

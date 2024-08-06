@@ -8,7 +8,7 @@ export default function CardLayout({ children, className, ...props }: Props) {
   return (
     <div
       className={twMerge(
-        `flex flex-col justify-center gap-2 w-full xl:flex xl:flex-row ${className}`,
+        `flex w-full flex-col justify-center gap-2 xl:flex xl:flex-row ${className}`,
       )}
       {...props}
     >

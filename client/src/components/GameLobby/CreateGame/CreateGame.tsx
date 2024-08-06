@@ -22,10 +22,10 @@ export default function CreateGame({ onGoBack }: Props) {
   }
 
   return (
-    <div className="flex flex-col justify-between h-full">
+    <div className="flex h-full flex-col justify-between">
       <div>
         {gameId ? (
-          <div className="flex flex-col justify-center items-center gap-y-3 mt-4">
+          <div className="mt-4 flex flex-col items-center justify-center gap-y-3">
             <HeaderLayout>
               <span className="mr-4">Game ID: {gameId}</span>
               <CopyButton textToCopy={gameId} />

@@ -19,7 +19,7 @@ export default function LobbyPlayerCard({ player }: Props) {
 
   return (
     <div
-      className="flex flex-row justify-between items-center h-20 w-full rounded border-2 p-2 bg-bgTetrary xl:w-1/4"
+      className="flex h-20 w-full flex-row items-center justify-between rounded border-2 bg-bgTetrary p-2 xl:w-1/4"
       style={{
         borderColor: player.color,
       }}
@@ -28,13 +28,13 @@ export default function LobbyPlayerCard({ player }: Props) {
         <div>{player.username}</div>
         <div className="min-h-4 md:min-h-5">
           {player.status === 'ready' && (
-            <div className="text-textSecondary text-xs md:text-sm">Ready!</div>
+            <div className="text-xs text-textSecondary md:text-sm">Ready!</div>
           )}
         </div>
       </div>
       {user.userId === player.userId && (
         <Button
-          className="w-32 h-14 md:w-40"
+          className="h-14 w-32 md:w-40"
           onClick={handleReady}
           disabled={player.status === 'ready'}
           colorScheme="secondary"

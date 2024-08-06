@@ -32,7 +32,7 @@ export default function Header() {
 
   return (
     <>
-      <div className="flex flex-row items-center justify-center py-4 h-24">
+      <div className="flex h-24 flex-row items-center justify-center py-4">
         <div className="flex-1"></div>
         <HeaderLayout>Turing Trivia</HeaderLayout>
         <div className="flex-1">
@@ -54,7 +54,7 @@ export default function Header() {
           </div>
         </div>
       </div>
-      <hr className="mb-4 border-t-3 border-borderPrimary" />
+      <hr className="border-t-3 mb-4 border-borderPrimary" />
       {showModal && (
         <LoginModal open={showModal} onClose={handleModalClose}>
           <Login

@@ -8,15 +8,15 @@ export default function LoginModal({ open, onClose, children }: Props) {
   return (
     <div
       data-testid="modal-background"
-      className={`fixed inset-0 flex justify-center items-center transition-colors ${open ? 'visible bg-black/20' : 'invisible'}`}
+      className={`fixed inset-0 flex items-center justify-center transition-colors ${open ? 'visible bg-black/20' : 'invisible'}`}
       onClick={onClose}
     >
       <div
-        className={`bg-bgPrimary border-borderPrimary border-2 rounded-xl shadow p-6 transition-all ${open ? 'scale-100 opacity-100' : 'scale-125 opacity-0'}`}
+        className={`rounded-xl border-2 border-borderPrimary bg-bgPrimary p-6 shadow transition-all ${open ? 'scale-100 opacity-100' : 'scale-125 opacity-0'}`}
         onClick={event => event.stopPropagation()}
       >
         <button
-          className="absolute top-1 right-2 p1 rounded-lg text-textSecondary hover:text-textPrimary"
+          className="p1 absolute right-2 top-1 rounded-lg text-textSecondary hover:text-textPrimary"
           title="Close"
           onClick={onClose}
         >

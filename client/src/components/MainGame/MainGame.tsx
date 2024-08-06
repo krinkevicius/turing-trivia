@@ -8,7 +8,7 @@ export default function MainGame() {
   const currentQuestion = useGameStoreContext(state => state.currentQuestion)
   const players = useGameStoreContext(state => state.players)
   return (
-    <div data-testid="main-game" className="flex flex-col justify-between h-full pb-1">
+    <div data-testid="main-game" className="flex h-full flex-col justify-between pb-1">
       <div>
         {currentQuestion ? <QuestionComponent question={currentQuestion} /> : <LoadingQuestion />}
       </div>

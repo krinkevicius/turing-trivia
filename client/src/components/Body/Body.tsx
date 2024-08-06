@@ -14,20 +14,20 @@ export default function Body() {
   if (connectionStatus === 'connected') return <GameLobby />
   if (connectionStatus === 'connecting') return <LoadingLobby />
   return (
-    <div className="flex flex-col container mx-auto px-8 gap-4 text-xs md:text-base">
-      <div className="text-xl font-bold text-center">Welcome to the Ultimate Trivia Challenge!</div>
+    <div className="container mx-auto flex flex-col gap-4 px-8 text-xs md:text-base">
+      <div className="text-center text-xl font-bold">Welcome to the Ultimate Trivia Challenge!</div>
       <p>
         Get ready for an exciting journey through the world of trivia! Whether you're a history
         buff, a science enthusiast, or a sports fanatic, there's something here for everyone.
       </p>
 
-      <div className="text-xl font-bold text-center">Invite your friends!</div>
+      <div className="text-center text-xl font-bold">Invite your friends!</div>
       <p>
         You can team up with up to 3 friends to form a group of 2-4 players. Don't have a group? No
         problem! You can join an existing game and make new friends along the way.
       </p>
 
-      <div className="text-xl font-bold text-center">Categories to Challenge Your Mind:</div>
+      <div className="text-center text-xl font-bold">Categories to Challenge Your Mind:</div>
       <ul className="list-disc">
         <li>
           <strong>History</strong>: Test your knowledge of the past.

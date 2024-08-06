@@ -6,8 +6,8 @@ function App() {
   useSocket()
 
   return (
-    <div className="bg-bgPrimary text-textPrimary font-poppins">
-      <div className="h-screen w-screen container mx-auto px-4">
+    <div className="bg-bgPrimary font-poppins text-textPrimary">
+      <div className="container mx-auto h-screen w-screen px-4">
         <Header />
         <div className="h-[calc(100dvh-150px)] max-h-screen">
           <Body />

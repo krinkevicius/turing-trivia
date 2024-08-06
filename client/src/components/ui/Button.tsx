@@ -7,7 +7,7 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 export default function Button({ children, colorScheme = 'primary', className, ...props }: Props) {
   const baseClasses =
-    'px-3 py-1.5 text-sm md:px-4 md:py-2 rounded md:text-md text-textPrimary hover:text-white focus:outline-none focus:ring-2 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:text-textPrimary'
+    'md:text-md rounded px-3 py-1.5 text-sm text-textPrimary hover:text-white focus:outline-none focus:ring-2 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:text-textPrimary md:px-4 md:py-2'
   const colorClasses =
     colorScheme === 'primary'
       ? 'bg-primaryBtnColor hover:bg-primaryBtnHover focus:ring-primaryBtnColor disabled:bg-primaryBtnColor'

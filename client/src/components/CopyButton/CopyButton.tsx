@@ -20,7 +20,7 @@ export default function CopyButton({ textToCopy, delay = 3000 }: Props) {
 
   return (
     <Button
-      className="text-xs bg-copyBtn w-20 hover:bg-copyBtnHover focus:ring-copyBtn"
+      className="w-20 bg-copyBtn text-xs hover:bg-copyBtnHover focus:ring-copyBtn"
       disabled={!textToCopy}
       onClick={copyText}
     >

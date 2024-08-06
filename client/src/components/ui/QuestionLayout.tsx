@@ -5,9 +5,9 @@ type Props = {
 
 export default function QuestionLayout({ question, answers }: Props) {
   return (
-    <div className="flex flex-col h-full container mx-auto items-center gap-4">
-      <div className="w-full mt-4">{question}</div>
-      <div className="grid grid-cols-2 w-3/4 gap-4">{answers}</div>
+    <div className="container mx-auto flex h-full flex-col items-center gap-4">
+      <div className="mt-4 w-full">{question}</div>
+      <div className="grid w-3/4 grid-cols-2 gap-4">{answers}</div>
     </div>
   )
 }

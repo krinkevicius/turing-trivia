@@ -28,10 +28,10 @@ export default function Login({ username, onUsernameChange, onLogin }: Props) {
   }, [onLogin, username])
 
   return (
-    <div className="flex flex-col py-4 gap-y-2">
+    <div className="flex flex-col gap-y-2 py-4">
       <input
         ref={inputRef}
-        className="shadow appearance-none border-borderPrimary border-2 rounded w-full py-2 px-3 text-textSecondary mb-3 bg-bgPrimary focus:outline-none focus:ring-2 focus:ring-borderPrimary focus:ring-opacity-50 focus:shadow-outline"
+        className="focus:shadow-outline mb-3 w-full appearance-none rounded border-2 border-borderPrimary bg-bgPrimary px-3 py-2 text-textSecondary shadow focus:outline-none focus:ring-2 focus:ring-borderPrimary focus:ring-opacity-50"
         type="text"
         disabled={connectionStatus !== 'disconnected'}
         onChange={onUsernameChange}
