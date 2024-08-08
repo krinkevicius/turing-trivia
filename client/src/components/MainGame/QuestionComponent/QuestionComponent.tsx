@@ -1,8 +1,6 @@
 import AnswerComponent from '@/components/MainGame/AnswerComponent'
 import QuestionLayout from '@/components/ui/QuestionLayout'
 import Timer from '@/components/ui/Timer'
-import { socket } from '@/libs/socket'
-import { useGameStoreContext } from '@/store/gameStore'
 import type { Question } from '@server/shared'
 import { useEffect, useState } from 'react'
 
@@ -11,18 +9,12 @@ type Props = {
 }
 
 export default function QuestionComponent({ question }: Props) {
-  const gameId = useGameStoreContext(state => state.gameId)
-  const [isAnswered, setIsAnswered] = useState<boolean>(question.showAnswers)
+  const [isDisabled, setIsDisabled] = useState<boolean>(question.showAnswers)
 
-  //To synchronize isAnswered with showAnswers
+  //To synchronize isAnswered & containerColor with showAnswers
   useEffect(() => {
-    setIsAnswered(question.showAnswers)
+    setIsDisabled(question.showAnswers)
   }, [question])
-
-  function handleAnswer(answerId: string) {
-    socket.emit('answer', gameId, question.id, answerId)
-    setIsAnswered(true)
-  }
 
   return (
     <>
@@ -47,9 +39,10 @@ export default function QuestionComponent({ question }: Props) {
           <AnswerComponent
             key={answer.id}
             answer={answer}
+            questionId={question.id}
             showAnswers={question.showAnswers}
-            disabled={isAnswered || question.showAnswers}
-            onAnswer={handleAnswer}
+            disabled={isDisabled}
+            onAnswer={() => setIsDisabled(true)}
           />
         ))}
       />

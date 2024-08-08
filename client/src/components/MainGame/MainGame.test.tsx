@@ -1,6 +1,7 @@
 import type { Question } from '@server/shared'
 import { render, screen } from '@testing-library/react'
 import { GameStoreProvider } from '@/store/gameStore'
+import { UserStoreProvider } from '@/store/userStore'
 import MainGame from '.'
 
 describe('MainGame', () => {
@@ -48,8 +49,11 @@ describe('MainGame', () => {
 
 function renderMainGame(currentQuestion?: Question) {
   return render(
-    <GameStoreProvider currentQuestion={currentQuestion}>
-      <MainGame />
-    </GameStoreProvider>,
+    <UserStoreProvider>
+      <GameStoreProvider currentQuestion={currentQuestion}>
+        <MainGame />
+      </GameStoreProvider>
+      ,
+    </UserStoreProvider>,
   )
 }

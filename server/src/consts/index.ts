@@ -1,3 +1,5 @@
+import { config } from '@server/config'
+
 export const CATEGORIES: Record<string, string> = {
   history: 'History',
   geography: 'Geography',
@@ -7,7 +9,7 @@ export const CATEGORIES: Record<string, string> = {
   sport_and_leisure: 'Sports & Leisure',
 }
 
-export const QUESTIONS_PER_ROUND = 10
+export const QUESTIONS_PER_ROUND = config.env === 'production' ? 10 : 1
 
 export const API_URL = 'https://the-trivia-api.com/v2/questions'
 

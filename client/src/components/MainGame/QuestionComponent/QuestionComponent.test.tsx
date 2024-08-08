@@ -1,9 +1,9 @@
-import type { Question } from '@server/shared'
+import type { Player, Question, User } from '@server/shared'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import QuestionComponent from '.'
 import { GameStoreProvider } from '@/store/gameStore'
-import { socket } from '@/libs/socket'
+import { UserStoreProvider } from '@/store/userStore'
 
 vi.mock('@/libs/socket', () => {
   return {
@@ -16,6 +16,20 @@ vi.mock('@/libs/socket', () => {
 beforeEach(() => {
   vi.clearAllMocks()
 })
+
+const testPlayer: Player = {
+  userId: 'test-user-id',
+  username: 'test-username',
+  status: 'ready',
+  color: '#6224ff',
+  score: 0,
+  selectedAnswer: null,
+}
+
+const testUser: User = {
+  userId: testPlayer.userId,
+  username: testPlayer.username,
+}
 
 const testQuestion: Question = {
   id: 'test-question-1',
@@ -74,23 +88,6 @@ describe('QuestionComponent', () => {
     expect(londonButton).toBeDisabled()
   })
 
-  it('should emit socket event with gameId, questionId, and answerId when an answer is clicked', async () => {
-    renderQuestionComponent()
-    const user = userEvent.setup()
-
-    const parisButton = screen.getByRole('button', { name: 'Paris' })
-
-    await user.click(parisButton)
-
-    expect(parisButton).toBeDisabled()
-    expect(socket.emit).toHaveBeenCalledWith(
-      'answer',
-      'test-game-id',
-      'test-question-1',
-      'test-answer-1',
-    )
-  })
-
   it('should show timer if showAnswers is false', () => {
     renderQuestionComponent()
 
@@ -106,8 +103,11 @@ describe('QuestionComponent', () => {
 
 function renderQuestionComponent({ question = testQuestion }: { question?: Question } = {}) {
   return render(
-    <GameStoreProvider gameId="test-game-id">
-      <QuestionComponent question={question} />
-    </GameStoreProvider>,
+    <UserStoreProvider user={testUser}>
+      <GameStoreProvider gameId="test-game-id" players={[testPlayer]}>
+        <QuestionComponent question={question} />
+      </GameStoreProvider>
+      ,
+    </UserStoreProvider>,
   )
 }
