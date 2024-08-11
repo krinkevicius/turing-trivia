@@ -39,6 +39,13 @@ jobs:
       - name: Start dev server for E2E tests
         run: npm run dev:e2e -w=server &
 
+      - name: Wait for server to startup
+        uses: Jtalk/url-health-check-action@v3.2
+        with:
+          max-attempts: 5
+          retry-delay: 5s
+          url: http://localhost:8181/api/health
+
       - name: Test client E2E
         run: npm run test:e2e -w=client
         env:
