@@ -7,6 +7,8 @@ test.describe('game sequence', () => {
   test('visitor can login', async ({ page }) => {
     await page.goto('/')
 
+    await expect(page).toHaveURL(/http:\/\/localhost:5173\//)
+
     const loginButton = page.getByRole('button', { name: 'Login' })
 
     // Sanity check, login button is visible before visitor connects to the server
