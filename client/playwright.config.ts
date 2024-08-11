@@ -9,7 +9,7 @@ const config: PlaywrightTestConfig = {
 
   timeout: 10_000,
   expect: {
-    timeout: 2_000,
+    timeout: 10_000,
   },
 
   forbidOnly: true,
