@@ -1,6 +1,13 @@
 import { test, expect } from '@playwright/test'
 import asLoggedInUser from './utils'
 
+test.beforeEach(async ({ page }) => {
+  // Listen for all console events
+  page.on('console', msg => {
+    console.log(`Console message: ${msg.text()}`)
+  })
+})
+
 test.describe('game sequence', () => {
   const username = 'john.doe'
 
