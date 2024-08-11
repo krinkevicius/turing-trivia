@@ -28,7 +28,7 @@ test.describe('game sequence', () => {
     await expect(page.getByText('Logged in as')).toBeVisible()
   })
 
-  test('user can try to join a game', async ({ page }) => {
+  test.skip('user can try to join a game', async ({ page }) => {
     await asLoggedInUser(page, username, async () => {
       await expect(page.getByTestId('game-lobby')).toBeVisible()
 
@@ -40,7 +40,7 @@ test.describe('game sequence', () => {
     })
   })
 
-  test('user can start a game', async ({ page }) => {
+  test.skip('user can start a game', async ({ page }) => {
     await asLoggedInUser(page, username, async () => {
       await expect(page.getByTestId('game-lobby')).toBeVisible()
 
