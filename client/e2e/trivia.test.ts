@@ -23,12 +23,13 @@ test.describe('game sequence', () => {
     await usernameInput.fill(username)
     await page.getByRole('button', { name: 'Login!' }).click()
 
-    await expect(loginButton).toBeHidden()
-    await expect(page.getByText('Logged in as')).toBeVisible()
-
+    await expect(loginButton).toBeDisabled()
+    // await expect(page.getByText('Logged in as')).toBeVisible()
+    await expect(page.getByTestId('game-lobby')).toBeVisible()
     // Refresh the page to make sure that the user is still logged in
     await page.reload()
-    await expect(page.getByText('Logged in as')).toBeVisible()
+    // await expect(page.getByText('Logged in as')).toBeVisible()
+    await expect(page.getByTestId('game-lobby')).toBeVisible()
   })
 
   test.skip('user can try to join a game', async ({ page }) => {
