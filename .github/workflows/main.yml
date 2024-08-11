@@ -37,7 +37,7 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Start dev server for E2E tests
-        run: npm run dev:e2e -w=server
+        run: npm run dev:e2e -w=server &
 
       - name: Test client E2E
         run: npm run test:e2e -w=client
