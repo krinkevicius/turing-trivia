@@ -44,6 +44,7 @@ export default function Header() {
               </>
             ) : (
               <Button
+                data-testid="header-login-button"
                 className="w-20"
                 disabled={connectionStatus === 'connecting'}
                 onClick={() => setShowModal(true)}

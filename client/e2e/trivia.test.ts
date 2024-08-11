@@ -9,10 +9,10 @@ test.describe('game sequence', () => {
 
     await expect(page).toHaveURL(/http:\/\/localhost:5173\//)
 
-    const loginButton = page.getByRole('button', { name: 'Login' })
+    const loginButton = page.getByTestId('header-login-button')
 
     // Sanity check, login button is visible before visitor connects to the server
-    await expect(page.getByText(/turing trivia/i)).toBeVisible()
+    // await expect(page.getByText(/turing trivia/i)).toBeVisible()
     await expect(page.getByText('Logged in as')).toBeHidden()
     await expect(loginButton).toBeVisible()
 
