@@ -10,7 +10,7 @@ test.describe('game sequence', () => {
     const loginButton = page.getByRole('button', { name: 'Login' })
 
     // Sanity check, login button is visible before visitor connects to the server
-    // await expect(page.getByText('Logged in as')).toBeHidden()
+    await expect(page.getByText('Logged in as')).toBeHidden()
     await expect(loginButton).toBeVisible()
 
     await loginButton.click()
