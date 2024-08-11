@@ -5,6 +5,7 @@ import { CATEGORIES, E2E_TEST_QUESTIONS, QUESTIONS_PER_ROUND, SHOW_ANSERS_MS } f
 import delay from '@server/utils/delay'
 import { prodLogger } from '@server/logger'
 import { config } from '@server/config'
+import cloneDeep from 'lodash/cloneDeep'
 
 export default async function gameloop(
   gameId: GameId,
@@ -20,7 +21,7 @@ export default async function gameloop(
             categories: Object.keys(CATEGORIES).join(','),
             difficulties: 'easy,medium',
           })
-        : E2E_TEST_QUESTIONS
+        : cloneDeep(E2E_TEST_QUESTIONS)
     for (let i = 0; i < questions.length; i += 1) {
       games.setQuestion(gameId, questions[i])
       gameUpdateEmmiter(gameId)
