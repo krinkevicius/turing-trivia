@@ -16,7 +16,7 @@ export default function GamePlayerCard({ player }: Props) {
       }}
     >
       <div>{player.username}</div>
-      <div>{player.score}</div>
+      <div data-testid="player-score">{player.score}</div>
     </div>
   )
 }

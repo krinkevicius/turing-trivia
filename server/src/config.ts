@@ -4,10 +4,11 @@ import z from 'zod'
 const { env } = process
 
 if (!env.NODE_ENV) env.NODE_ENV = 'development'
-const isDevTest = env.NODE_ENV === 'development' || env.NODE_ENV === 'test'
+const isDevTest =
+  env.NODE_ENV === 'development' || env.NODE_ENV === 'test' || env.NODE_ENV === 'e2e'
 
 export const schema = z.object({
-  env: z.enum(['development', 'production', 'staging', 'test']).default('development'),
+  env: z.enum(['development', 'production', 'e2e', 'test']).default('development'),
   port: z
     .string()
     .refine(val => parseInt(val, 10))

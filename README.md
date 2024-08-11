@@ -82,10 +82,21 @@ After the game, score board is presented to all players.
 
 ## Tests
 
-Unit tests were written to test the functionality of the code following the principles of TDD. To run the tests, execute below command in <code>client</code> or <code>server</code> directories.
+### Server
 
-```sh
+```bash
 npm run test
+```
+
+### Client
+
+```bash
+# runs unit tests
+npm run test:unit
+
+# runs E2E tests
+npm run dev:e2e -w=server # starts server in e2e environment
+npm run test:e2e -w=client
 ```
 
 ## User Stories

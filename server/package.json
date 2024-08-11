@@ -6,6 +6,7 @@
   "scripts": {
     "build": "tsc --rootDir src && tsc-alias",
     "dev": "npx tsx watch src/index.ts",
+    "dev:e2e": "NODE_ENV=e2e npx tsx watch src/index.ts",
     "start": "node --loader ./loader.js ./dist/index.js",
     "lint": "eslint ./src --ext .js,.jsx,.ts,.tsx --fix",
     "format": "prettier --write .",
