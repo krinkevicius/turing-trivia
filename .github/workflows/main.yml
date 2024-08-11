@@ -34,7 +34,7 @@ jobs:
         run: npm run test:unit -w=client
 
       - name: Install Playwright Browsers
-        run: npx playwright install --with-deps chromium
+        run: npx playwright install --with-deps chromium firefox
 
       - name: Start dev server for E2E tests
         run: npm run dev:e2e -w=server &
