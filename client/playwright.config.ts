@@ -6,19 +6,24 @@ import { devices } from '@playwright/test'
  */
 const config: PlaywrightTestConfig = {
   testDir: './e2e',
-
-  timeout: 10_000,
+  timeout: process.env.CI ? 30_000 : 10_000,
   expect: {
-    timeout: 10_000,
+    timeout: process.env.CI ? 5_000 : 2_000,
   },
 
-  forbidOnly: true,
+  forbidOnly: !!process.env.CI,
+
+  retries: process.env.CI ? 2 : 0,
+
+  workers: process.env.CI ? 1 : undefined,
+
   reporter: 'html',
 
   use: {
+    actionTimeout: 0,
     baseURL: 'http://localhost:5173',
     trace: 'on-first-retry',
-    headless: false,
+    headless: !!process.env.CI,
   },
 
   projects: [
@@ -31,9 +36,9 @@ const config: PlaywrightTestConfig = {
   ],
 
   webServer: {
-    command: 'npx vite dev',
+    command: process.env.CI ? 'npx vite preview --port 5173' : 'npx vite dev',
     port: 5173,
-    reuseExistingServer: true,
+    reuseExistingServer: !process.env.CI,
   },
 }
 
