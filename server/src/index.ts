@@ -113,5 +113,5 @@ io.on('connection', socket => {
 })
 
 server.listen(config.port, () => {
-  devLogger.info('Server running at port %d', config.port)
+  devLogger.info(`Server (${config.env}) running at port ${config.port}`)
 })
