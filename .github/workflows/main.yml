@@ -38,12 +38,14 @@ jobs:
 
       - name: Start dev server for E2E tests
         run: npm run dev:e2e -w=server &
+        env:
+          PORT: 3000
 
       - name: Build front end for E2E tests
         run: npm run build -w=client
         env:
-          VITE_SOCKET_PORT: 8181,
-          VITE_SOCKET_ORIGIN: http://127.0.0.1
+          VITE_SOCKET_PORT: 3000,
+          VITE_SOCKET_ORIGIN: http://localhost
 
       - name: Wait for server to startup
         uses: Jtalk/url-health-check-action@v3.2
@@ -54,9 +56,6 @@ jobs:
 
       - name: Test client E2E
         run: npm run test:e2e -w=client
-        # env:
-        #   VITE_SOCKET_PORT: 8181,
-        #   VITE_SOCKET_ORIGIN: http://localhost
 
       - uses: actions/upload-artifact@v3
         if: always()
