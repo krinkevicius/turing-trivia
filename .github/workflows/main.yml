@@ -43,7 +43,7 @@ jobs:
         run: npm run build -w=client
         env:
           VITE_SOCKET_PORT: 8181,
-          VITE_SOCKET_ORIGIN: http://localhost
+          VITE_SOCKET_ORIGIN: http://127.0.0.1
 
       - name: Wait for server to startup
         uses: Jtalk/url-health-check-action@v3.2
