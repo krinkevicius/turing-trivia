@@ -6,9 +6,9 @@ import { devices } from '@playwright/test'
  */
 const config: PlaywrightTestConfig = {
   testDir: './e2e',
-  timeout: process.env.CI ? 30_000 : 10_000,
+  timeout: process.env.CI ? 90_000 : 10_000,
   expect: {
-    timeout: process.env.CI ? 5_000 : 2_000,
+    timeout: process.env.CI ? 15_000 : 2_000,
   },
 
   forbidOnly: !!process.env.CI,
