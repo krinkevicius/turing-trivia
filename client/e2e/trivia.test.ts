@@ -2,7 +2,10 @@ import { test, expect } from '@playwright/test'
 import asLoggedInUser from './utils'
 
 test.beforeEach(async ({ page }) => {
-  // Listen for all console events
+  // Listen for all console events on CI
+
+  if (!process.env.CI) return
+
   page.on('console', msg => {
     console.log(`Console message: ${msg.text()}`)
   })
@@ -39,7 +42,7 @@ test.describe('game sequence', () => {
     await expect(page.getByTestId('game-lobby')).toBeVisible()
   })
 
-  test.skip('user can try to join a game', async ({ page }) => {
+  test('user can try to join a game', async ({ page }) => {
     await asLoggedInUser(page, username, async () => {
       await expect(page.getByTestId('game-lobby')).toBeVisible()
 
@@ -51,7 +54,7 @@ test.describe('game sequence', () => {
     })
   })
 
-  test.skip('user can start a game', async ({ page }) => {
+  test('user can start a game', async ({ page }) => {
     await asLoggedInUser(page, username, async () => {
       await expect(page.getByTestId('game-lobby')).toBeVisible()
 
