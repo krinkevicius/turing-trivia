@@ -34,6 +34,7 @@ const errorEmitter = (gameId: GameId, msg: string) => {
 }
 
 io.use((socket, next) => {
+  devLogger.info('middleware triggered...')
   const { sessionId } = socket.handshake.auth
   const username = socket.handshake.auth.username || `anonymous_${generateRandomId(2)}`
 
