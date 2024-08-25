@@ -14,7 +14,7 @@ const server = createServer(app)
 
 const io = new Server<ClientToServerEvents, ServerToClientEvents, EventsMap, SocketData>(server, {
   cors: {
-    origin: ['http://localhost:5173', 'http://localhost:4173'],
+    origin: ['http://localhost:5173', 'http://localhost:4173', 'ws://localhost:5173'],
   },
 })
 
