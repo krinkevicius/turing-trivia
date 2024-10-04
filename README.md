@@ -2,8 +2,6 @@
 
 A simple multiplayer trivia game for 2-4 players.
 
-#### [Try out the production build of the app here!](https://turing-trivia.cv41bfvka52ra.eu-central-1.cs.amazonlightsail.com/)
-
 ##### Tech Stack
 
 - [React](https://react.dev/) and [Tailwind CSS](https://tailwindcss.com/) for frontend;
